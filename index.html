@@ -3,1611 +3,1763 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prüfprotokoll – Rohmann Elotest PL500 | Schaeffler</title>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<title>ZfP Prüfungssystem · Schaeffler</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    /* Schaeffler Brand Colors */
-    --schaeffler-green:   #00893D;
-    --schaeffler-green-d: #006B30;
-    --schaeffler-green-l: #00A84A;
-    --schaeffler-green-x: #E6F4EC;
-
-    --white:   #FFFFFF;
-    --gray-05: #F5F5F5;
-    --gray-10: #E8E8E8;
-    --gray-20: #CCCCCC;
-    --gray-40: #999999;
-    --gray-60: #666666;
-    --gray-80: #333333;
-    --black:   #1A1A1A;
-
-    --red:     #D42B2B;
-    --red-l:   #FDF2F2;
-    --amber:   #C47B00;
-    --amber-l: #FFF8EC;
-    --ok-l:    #E6F4EC;
-
-    --header-h: 68px;
-    --sidebar-w: 240px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--gray-05);
-    color: var(--black);
-    font-family: 'Source Sans 3', 'Arial', sans-serif;
-    font-size: 14px;
-    min-height: 100vh;
-  }
-
-  /* ── HEADER ─────────────────────────────── */
-  header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    height: var(--header-h);
-    background: var(--white);
-    border-bottom: 3px solid var(--schaeffler-green);
-    display: flex; align-items: center;
-    padding: 0 0 0 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  .header-logo-strip {
-    background: var(--schaeffler-green);
-    height: 100%;
-    width: 220px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    padding: 0 24px;
-  }
-  .schaeffler-wordmark {
-    color: white;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .schaeffler-wordmark svg {
-    width: 28px; height: 28px; flex-shrink: 0;
-  }
-  .header-content {
-    flex: 1; display: flex; align-items: center;
-    justify-content: space-between;
-    padding: 0 28px;
-  }
-  .header-doc-info {
-    display: flex; flex-direction: column; gap: 2px;
-  }
-  .header-doc-title {
-    font-size: 15px; font-weight: 700; color: var(--black);
-    letter-spacing: 0.2px;
-  }
-  .header-doc-sub {
-    font-size: 12px; color: var(--gray-60);
-    font-weight: 400;
-  }
-  .header-actions { display: flex; gap: 8px; align-items: center; }
-
-  .btn {
-    height: 36px;
-    padding: 0 16px;
-    border-radius: 2px;
-    font-size: 13px; font-weight: 600;
-    font-family: 'Source Sans 3', sans-serif;
-    cursor: pointer; border: none;
-    transition: all 0.15s;
-    display: inline-flex; align-items: center; gap: 6px;
-    letter-spacing: 0.3px;
-  }
-  .btn-outline {
-    background: white; color: var(--gray-60);
-    border: 1.5px solid var(--gray-20);
-  }
-  .btn-outline:hover { border-color: var(--schaeffler-green); color: var(--schaeffler-green); }
-  .btn-green {
-    background: var(--schaeffler-green); color: white;
-  }
-  .btn-green:hover { background: var(--schaeffler-green-d); }
-  .btn-ghost {
-    background: transparent; color: var(--gray-60);
-    border: none;
-  }
-  .btn-ghost:hover { color: var(--schaeffler-green); background: var(--gray-05); }
-
-  /* ── LAYOUT ──────────────────────────────── */
-  .layout {
-    display: flex;
-    padding-top: var(--header-h);
-    min-height: 100vh;
-  }
-
-  nav.sidebar {
-    width: var(--sidebar-w); flex-shrink: 0;
-    position: sticky; top: var(--header-h);
-    height: calc(100vh - var(--header-h));
-    overflow-y: auto;
-    background: var(--white);
-    border-right: 1px solid var(--gray-10);
-    padding: 0;
-  }
-  .sidebar-section-label {
-    padding: 20px 20px 6px;
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--gray-40);
-  }
-  .nav-link {
-    display: flex; align-items: center;
-    padding: 10px 20px;
-    color: var(--gray-60); text-decoration: none;
-    font-size: 13px; cursor: pointer;
-    border-left: 3px solid transparent;
-    transition: all 0.12s;
-    gap: 8px;
-  }
-  .nav-link:hover { color: var(--schaeffler-green); background: var(--schaeffler-green-x); }
-  .nav-link.active {
-    color: var(--schaeffler-green);
-    border-left-color: var(--schaeffler-green);
-    background: var(--schaeffler-green-x);
-    font-weight: 600;
-  }
-  .nav-badge {
-    margin-left: auto; font-size: 10px; font-weight: 700;
-    padding: 1px 6px; border-radius: 10px;
-    background: var(--gray-10); color: var(--gray-60);
-    font-family: 'Source Code Pro', monospace;
-  }
-  .nav-badge.ok { background: var(--ok-l); color: var(--schaeffler-green-d); }
-  .nav-badge.nok { background: var(--red-l); color: var(--red); }
-
-  /* ── MAIN ────────────────────────────────── */
-  main {
-    flex: 1;
-    padding: 28px 32px;
-    max-width: calc(100% - var(--sidebar-w));
-    overflow-x: hidden;
-  }
-
-  /* ── STATUS SUMMARY BAR ───────────────────── */
-  .summary-bar {
-    background: var(--white);
-    border: 1px solid var(--gray-10);
-    border-left: 4px solid var(--schaeffler-green);
-    border-radius: 0 4px 4px 0;
-    padding: 16px 24px;
-    display: flex; align-items: center; gap: 0;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-  .summary-item {
-    display: flex; flex-direction: column; gap: 2px;
-    padding: 0 20px;
-    border-right: 1px solid var(--gray-10);
-  }
-  .summary-item:first-child { padding-left: 0; }
-  .summary-item:last-child { border-right: none; }
-  .summary-item .s-label {
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--gray-40);
-  }
-  .summary-item .s-value {
-    font-size: 16px; font-weight: 700;
-    font-family: 'Source Code Pro', monospace;
-    color: var(--gray-80);
-  }
-  .s-value.ok  { color: var(--schaeffler-green); }
-  .s-value.nok { color: var(--red); }
-  .s-value.blue { color: #0057B8; }
-
-  /* ── CARDS ───────────────────────────────── */
-  .card {
-    background: var(--white);
-    border: 1px solid var(--gray-10);
-    border-radius: 4px;
-    margin-bottom: 16px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  }
-  .card-header {
-    padding: 14px 20px;
-    background: var(--white);
-    border-bottom: 2px solid var(--gray-10);
-    display: flex; align-items: center; gap: 12px;
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.12s;
-  }
-  .card-header:hover { background: var(--gray-05); }
-  .card-header.open { border-bottom-color: var(--schaeffler-green); }
-  .section-num {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: var(--schaeffler-green);
-    color: white; font-size: 12px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .section-num.neutral {
-    background: var(--gray-10); color: var(--gray-60);
-  }
-  .card-title-wrap { flex: 1; }
-  .card-title-de { font-size: 14px; font-weight: 700; color: var(--black); }
-  .card-title-en { font-size: 11px; color: var(--gray-40); margin-top: 1px; }
-  .card-status {
-    font-size: 11px; font-weight: 700;
-    font-family: 'Source Code Pro', monospace;
-    padding: 3px 10px; border-radius: 2px;
-    border: 1.5px solid;
-  }
-  .card-status.ok  { color: var(--schaeffler-green); border-color: rgba(0,137,61,0.35); background: var(--ok-l); }
-  .card-status.nok { color: var(--red); border-color: rgba(212,43,43,0.3); background: var(--red-l); }
-  .card-status.pend { color: var(--gray-40); border-color: var(--gray-20); background: var(--gray-05); }
-  .card-chevron {
-    color: var(--gray-40); font-size: 13px;
-    transition: transform 0.2s;
-    margin-left: 4px;
-  }
-  .card-chevron.open { transform: rotate(180deg); }
-  .tolerance-tag {
-    font-size: 11px; font-weight: 600;
-    background: var(--amber-l); color: var(--amber);
-    border: 1px solid rgba(196,123,0,0.3);
-    padding: 2px 8px; border-radius: 2px;
-    font-family: 'Source Code Pro', monospace;
-  }
-  .card-body { padding: 24px; }
-  .card-body.hidden { display: none; }
-
-  /* ── INFO BOX ────────────────────────────── */
-  .infobox {
-    background: var(--schaeffler-green-x);
-    border-left: 4px solid var(--schaeffler-green);
-    border-radius: 0 4px 4px 0;
-    padding: 12px 16px;
-    font-size: 13px; color: var(--gray-80);
-    line-height: 1.65; margin-bottom: 20px;
-  }
-  .infobox strong { color: var(--schaeffler-green-d); }
-
-  /* ── FORM ELEMENTS ───────────────────────── */
-  .field-grid { display: grid; gap: 16px; margin-bottom: 16px; }
-  .field-grid.c2 { grid-template-columns: 1fr 1fr; }
-  .field-grid.c3 { grid-template-columns: 1fr 1fr 1fr; }
-  .field-grid.c4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-
-  .field { display: flex; flex-direction: column; gap: 5px; }
-  .field-label {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.6px;
-    color: var(--gray-60); text-transform: uppercase;
-  }
-  .field-label span { font-weight: 400; font-style: italic; text-transform: none; }
-  .field input, .field select, .field textarea {
-    background: var(--white);
-    border: 1.5px solid var(--gray-20);
-    border-radius: 2px;
-    color: var(--black);
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 13px;
-    padding: 8px 10px;
-    transition: border-color 0.15s;
-    outline: none;
-    width: 100%;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: var(--schaeffler-green);
-    box-shadow: 0 0 0 3px rgba(0,137,61,0.12);
-  }
-  .field input[readonly] {
-    background: var(--gray-05); border-color: var(--gray-10);
-    color: var(--schaeffler-green); font-family: 'Source Code Pro', monospace;
-    font-size: 12px; font-weight: 600;
-  }
-  .field textarea { resize: vertical; min-height: 80px; }
-
-  /* ── SECTION DIVIDER ─────────────────────── */
-  .divider {
-    display: flex; align-items: center; gap: 12px;
-    margin: 22px 0 16px;
-  }
-  .divider span {
-    font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--gray-60); white-space: nowrap;
-    padding: 2px 10px;
-    border: 1px solid var(--gray-20);
-    border-radius: 2px;
-    background: var(--gray-05);
-  }
-  .divider::before, .divider::after {
-    content: ''; flex: 1; height: 1px; background: var(--gray-10);
-  }
-
-  /* ── CHECK ROWS (ok/nok/na) ──────────────── */
-  .check-row {
-    display: flex; align-items: center; gap: 16px;
-    padding: 11px 0;
-    border-bottom: 1px solid var(--gray-10);
-  }
-  .check-row:last-child { border-bottom: none; }
-  .check-label { flex: 1; font-size: 13px; color: var(--black); line-height: 1.4; }
-  .check-label .en { font-size: 11px; color: var(--gray-40); margin-top: 2px; }
-  .radio-group { display: flex; gap: 4px; }
-  .rbtn {
-    display: flex; align-items: center; gap: 5px;
-    padding: 5px 12px; border-radius: 2px;
-    border: 1.5px solid var(--gray-20);
-    font-size: 12px; font-weight: 700; cursor: pointer;
-    font-family: 'Source Code Pro', monospace;
-    transition: all 0.12s; user-select: none;
-    background: var(--white);
-  }
-  .rbtn input { display: none; }
-  .rbtn:hover { border-color: var(--schaeffler-green); color: var(--schaeffler-green); }
-  .rbtn.ok:has(input:checked)  { background: var(--ok-l);  border-color: rgba(0,137,61,0.5);  color: var(--schaeffler-green-d); }
-  .rbtn.nok:has(input:checked) { background: var(--red-l); border-color: rgba(212,43,43,0.5); color: var(--red); }
-  .rbtn.na:has(input:checked)  { background: var(--gray-05); border-color: var(--gray-20); color: var(--gray-60); }
-
-  /* ── TABLES ──────────────────────────────── */
-  .tbl-wrap { overflow-x: auto; border-radius: 2px; border: 1px solid var(--gray-10); }
-  table.ptbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .ptbl th {
-    background: var(--gray-05);
-    border: 1px solid var(--gray-10);
-    padding: 8px 10px; text-align: left;
-    font-size: 10px; font-weight: 700; letter-spacing: 0.7px;
-    color: var(--gray-60); text-transform: uppercase;
-  }
-  .ptbl th.green-h { background: var(--schaeffler-green); color: white; }
-  .ptbl td {
-    border: 1px solid var(--gray-10);
-    padding: 5px 8px; vertical-align: middle;
-  }
-  .ptbl tr:hover td { background: var(--gray-05); }
-  .ptbl td input {
-    background: transparent; border: none; outline: none;
-    color: var(--black); width: 100%;
-    font-size: 13px; font-family: 'Source Sans 3', sans-serif;
-    padding: 2px 4px;
-  }
-  .ptbl td input:focus {
-    background: var(--schaeffler-green-x);
-    border-radius: 2px;
-  }
-  .ptbl td.mono {
-    font-family: 'Source Code Pro', monospace; font-size: 12px;
-    background: var(--gray-05); font-weight: 600;
-  }
-  .ptbl td.mono.ok  { color: var(--schaeffler-green); background: var(--ok-l); }
-  .ptbl td.mono.nok { color: var(--red); background: var(--red-l); }
-  .ptbl td.center { text-align: center; }
-
-  /* ── ENV CARDS ───────────────────────────── */
-  .env-cards { display: flex; gap: 12px; flex-wrap: wrap; }
-  .env-card {
-    flex: 1; min-width: 160px;
-    padding: 16px 20px; border-radius: 4px;
-    border: 2px solid var(--gray-20);
-    cursor: pointer; text-align: center;
-    transition: all 0.15s; user-select: none;
-  }
-  .env-card:hover { border-color: var(--schaeffler-green); }
-  .env-card.sel { border-color: var(--schaeffler-green); background: var(--schaeffler-green-x); }
-  .env-card input { display: none; }
-  .env-card .ev-de { font-size: 14px; font-weight: 700; color: var(--black); }
-  .env-card .ev-en { font-size: 11px; color: var(--gray-40); margin-top: 3px; }
-
-  /* ── PHOTO ZONE ──────────────────────────── */
-  .photo-zone {
-    border: 2px dashed var(--gray-20); border-radius: 4px;
-    padding: 40px 24px; text-align: center; cursor: pointer;
-    transition: all 0.15s; color: var(--gray-40);
-  }
-  .photo-zone:hover { border-color: var(--schaeffler-green); color: var(--schaeffler-green); }
-  .photo-zone.filled { padding: 8px; border-style: solid; border-color: var(--gray-20); }
-  .photo-zone img { max-width: 100%; max-height: 260px; border-radius: 2px; }
-  .photo-icon { font-size: 36px; margin-bottom: 10px; }
-
-  /* ── PLAUSIBILITY ────────────────────────── */
-  .plaus-grid {
-    display: grid; grid-template-columns: repeat(6,1fr); gap: 6px; margin-top: 12px;
-  }
-  .plaus-cell {
-    background: var(--white); border: 1.5px solid var(--gray-10);
-    border-radius: 4px; padding: 10px 4px; text-align: center;
-    transition: all 0.12s;
-  }
-  .plaus-cell .pnum {
-    font-size: 10px; color: var(--gray-40); font-weight: 700;
-    font-family: 'Source Code Pro', monospace;
-    margin-bottom: 4px;
-  }
-  .plaus-cell select {
-    background: transparent; border: none; outline: none;
-    font-family: 'Source Code Pro', monospace; font-size: 15px;
-    font-weight: 700; color: var(--gray-80); cursor: pointer;
-    width: 100%; text-align: center;
-  }
-  .plaus-cell.iO  { border-color: rgba(0,137,61,0.4); background: var(--ok-l); }
-  .plaus-cell.iO select  { color: var(--schaeffler-green); }
-  .plaus-cell.niO { border-color: rgba(212,43,43,0.4); background: var(--red-l); }
-  .plaus-cell.niO select { color: var(--red); }
-  .plaus-cell .pinput {
-    background: transparent; border: none; outline: none;
-    font-size: 12px; text-align: center; width: 100%;
-    font-family: 'Source Sans 3', sans-serif; color: var(--gray-80);
-    padding: 0;
-  }
-
-  /* ── FOOTER STRIP ────────────────────────── */
-  .page-footer-strip {
-    background: var(--gray-05); border: 1px solid var(--gray-10);
-    border-radius: 4px; padding: 14px 20px;
-    display: flex; gap: 24px; flex-wrap: wrap;
-    margin-top: 8px; margin-bottom: 24px;
-    font-size: 12px; color: var(--gray-60);
-  }
-  .page-footer-strip strong { color: var(--schaeffler-green); }
-
-  /* ── TOAST ───────────────────────────────── */
-  #toast {
-    position: fixed; bottom: 28px; right: 28px;
-    background: var(--schaeffler-green); color: white;
-    padding: 12px 20px; border-radius: 4px;
-    font-size: 13px; font-weight: 700;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    display: none; z-index: 9999;
-    font-family: 'Source Sans 3', sans-serif;
-  }
-
-  /* ── MOBILE (≤768px) ─────────────────────────── */
-  @media (max-width: 768px) {
-
-    :root { --header-h: 56px; --sidebar-w: 280px; }
-
-    /* Header kompakt */
-    header { padding: 0; }
-    .header-logo-strip { width: 48px; padding: 0; justify-content: center; }
-    .schaeffler-wordmark span, .schaeffler-wordmark { font-size: 0; gap: 0; }
-    .schaeffler-wordmark svg { width: 26px; height: 26px; margin: 0 11px; }
-    .header-doc-info { display: none; }
-    .header-actions .btn-ghost,
-    .header-actions .btn-outline { display: none; }
-    .header-actions .btn-green { padding: 0 12px; font-size: 12px; gap: 4px; }
-    .header-actions .btn-green::before { content: '🖨'; }
-    .header-content { padding: 0 10px 0 0; justify-content: flex-end; gap: 8px; }
-
-    /* Hamburger-Button */
-    #mob-menu-btn {
-      display: flex !important;
-      align-items: center; justify-content: center;
-      width: 40px; height: 40px;
-      background: transparent; border: none; cursor: pointer;
-      flex-direction: column; gap: 5px; padding: 8px;
-      order: -1; margin-left: 4px;
-    }
-    #mob-menu-btn span {
-      display: block; width: 22px; height: 2px;
-      background: var(--schaeffler-green); border-radius: 2px;
-      transition: all 0.2s;
-    }
-    #mob-menu-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    #mob-menu-btn.open span:nth-child(2) { opacity: 0; }
-    #mob-menu-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* Overlay-Hintergrund */
-    #mob-overlay {
-      display: none;
-      position: fixed; inset: 0; z-index: 150;
-      background: rgba(0,0,0,0.45);
-    }
-    #mob-overlay.show { display: block; }
-
-    /* Sidebar als Drawer */
-    nav.sidebar {
-      position: fixed;
-      top: var(--header-h); left: 0;
-      height: calc(100vh - var(--header-h));
-      width: var(--sidebar-w);
-      z-index: 160;
-      transform: translateX(-100%);
-      transition: transform 0.25s ease;
-      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
-    }
-    nav.sidebar.open { transform: translateX(0); }
-
-    /* Nav-Links größer für Touch */
-    .nav-link { padding: 13px 20px; font-size: 14px; }
-
-    /* Layout: volle Breite */
-    .layout { padding-top: var(--header-h); }
-    main { max-width: 100%; padding: 16px 12px; }
-
-    /* Summary-Bar: 2-spaltig scrollen */
-    .summary-bar {
-      padding: 10px 14px;
-      gap: 0;
-      overflow-x: auto;
-      flex-wrap: nowrap;
-    }
-    .summary-item { padding: 0 14px; flex-shrink: 0; }
-    .summary-item .s-label { font-size: 9px; }
-    .summary-item .s-value { font-size: 13px; }
-
-    /* Cards */
-    .card-body { padding: 14px; }
-    .card-header { padding: 12px 14px; }
-    .card-title-de { font-size: 13px; }
-    .tolerance-tag { display: none; }
-
-    /* Alle Grids → 1 Spalte */
-    .field-grid.c2,
-    .field-grid.c3,
-    .field-grid.c4 { grid-template-columns: 1fr; gap: 10px; }
-
-    /* Inputs/Selects größer */
-    .field input, .field select, .field textarea {
-      font-size: 15px; padding: 10px 12px;
-      min-height: 44px;
-    }
-
-    /* Check-Rows: Label oben, Buttons unten */
-    .check-row { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .radio-group { gap: 6px; }
-    .rbtn { padding: 8px 16px; font-size: 13px; min-height: 40px; }
-
-    /* Tabellen: horizontal scrollen */
-    .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .ptbl { min-width: 520px; }
-    .ptbl th, .ptbl td { padding: 7px 8px; font-size: 12px; white-space: nowrap; }
-    .ptbl td input { min-width: 60px; font-size: 13px; }
-
-    /* Plausitest-Tabelle: kompakter */
-    #plaus-table { min-width: 340px; }
-    #plaus-table th, #plaus-table td { padding: 8px 6px; }
-    #plaus-table select { font-size: 16px; }
-
-    /* Env-Cards: nebeneinander bleiben aber kleiner */
-    .env-card { min-width: 120px; padding: 12px 10px; }
-
-    /* Foto-Zone */
-    .photo-zone { padding: 24px 16px; }
-
-    /* Toast unten mittig */
-    #toast { bottom: 16px; right: 16px; left: 16px; text-align: center; }
-
-    /* Page-Footer-Strip: kompakter */
-    .page-footer-strip { gap: 12px; padding: 10px 14px; font-size: 11px; }
-
-    /* Infobox */
-    .infobox { font-size: 12px; }
-  }
-
-  /* Hamburger immer versteckt auf Desktop */
-  #mob-menu-btn { display: none; }
-
-  /* ── PRINT: DIN A4 OPTIMIERT ─────────────────── */
-  @media print {
-    @page {
-      size: A4 portrait;
-      margin: 15mm 12mm 18mm 12mm;
-    }
-    @page :first { margin-top: 10mm; }
-
-    /* Seitenzahlen via CSS counter */
-    @page {
-      @bottom-right {
-        content: counter(page) " / " counter(pages);
-        font-family: 'Source Sans 3', Arial, sans-serif;
-        font-size: 8pt;
-        color: #666;
-      }
-    }
-
-    /* Druckkopf auf jeder Seite */
-    #print-header {
-      display: flex !important;
-      position: running(pageHeader);
-      margin-bottom: 5mm;
-    }
-
-    /* Reset */
-    *, *::before, *::after { box-shadow: none !important; }
-    html, body { background: white !important; color: black !important; }
-
-    /* Screen-only Elemente verstecken */
-    header,
-    nav.sidebar,
-    #toast,
-    .header-actions,
-    .summary-bar,
-    .btn,
-    .photo-zone ~ button,
-    .card-chevron,
-    input[type=file] { display: none !important; }
-
-    /* Layout zurücksetzen */
-    .layout {
-      display: block !important;
-      padding-top: 0 !important;
-    }
-    main {
-      max-width: 100% !important;
-      width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      overflow: visible !important;
-    }
-
-    /* ── PRINT HEADER (wiederholt auf jeder Seite via running element) ── */
-    .print-page-header {
-      display: flex !important;
-      align-items: center;
-      border-bottom: 3pt solid #00893D;
-      padding-bottom: 4mm;
-      margin-bottom: 5mm;
-    }
-    .print-logo-block {
-      background: #00893D !important;
-      color: white !important;
-      padding: 4mm 6mm;
-      font-family: 'Source Sans 3', Arial, sans-serif;
-      font-size: 11pt;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-      white-space: nowrap;
-    }
-    .print-doc-info {
-      flex: 1;
-      padding-left: 5mm;
-    }
-    .print-doc-info .title {
-      font-size: 11pt;
-      font-weight: 700;
-      color: #1A1A1A;
-    }
-    .print-doc-info .sub {
-      font-size: 8pt;
-      color: #666;
-      margin-top: 1mm;
-    }
-    .print-doc-nr {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 10pt;
-      font-weight: 700;
-      color: #00893D;
-      white-space: nowrap;
-    }
-
-    /* ── CARDS ── */
-    .card {
-      border: 0.5pt solid #CCCCCC !important;
-      border-radius: 0 !important;
-      margin-bottom: 5mm !important;
-      page-break-inside: avoid;
-      break-inside: avoid;
-      box-shadow: none !important;
-      background: white !important;
-    }
-
-    /* Große Sections dürfen umbrechen */
-    #s3 .card-body,
-    #s4 .card-body,
-    #s5 .card-body,
-    #s6 .card-body { page-break-inside: auto; break-inside: auto; }
-
-    #s3, #s4, #s5, #s6 { page-break-inside: auto; break-inside: auto; }
-
-    /* Neue Seite vor wichtigen Sektionen */
-    #s3  { page-break-before: always; break-before: page; }
-    #s4  { page-break-before: always; break-before: page; }
-    #s5  { page-break-before: always; break-before: page; }
-    #s6  { page-break-before: always; break-before: page; }
-    /* s-sign folgt direkt nach Plausitest auf Seite 8 — kein eigener Seitenumbruch */
-
-    /* Card-Body immer sichtbar */
-    .card-body { display: block !important; padding: 4mm 5mm !important; }
-
-    /* Card-Header Styling */
-    .card-header {
-      background: #F5F5F5 !important;
-      border-bottom: 1.5pt solid #00893D !important;
-      padding: 2.5mm 5mm !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .card-header.open { border-bottom-color: #00893D !important; }
-    .section-num {
-      background: #00893D !important;
-      color: white !important;
-      font-size: 9pt;
-      width: 20px; height: 20px;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .section-num.neutral { background: #E8E8E8 !important; color: #666 !important; }
-    .card-title-de { font-size: 10pt !important; font-weight: 700 !important; }
-    .card-title-en { font-size: 7.5pt !important; }
-
-    /* Status Badges */
-    .card-status {
-      font-size: 8pt !important;
-      padding: 1pt 5pt !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .card-status.ok  { background: #E6F4EC !important; color: #00893D !important; border-color: #00893D !important; }
-    .card-status.nok { background: #FDF2F2 !important; color: #D42B2B !important; border-color: #D42B2B !important; }
-    .card-status.pend { background: #F5F5F5 !important; color: #999 !important; }
-    .tolerance-tag { font-size: 7.5pt !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-    /* Fonts verkleinern */
-    body { font-size: 8.5pt !important; line-height: 1.35 !important; }
-    .field-label { font-size: 7pt !important; margin-bottom: 1mm !important; }
-    .field input, .field select, .field textarea {
-      font-size: 8.5pt !important;
-      padding: 2mm 2.5mm !important;
-      border: 0.5pt solid #CCC !important;
-      border-radius: 0 !important;
-      background: white !important;
-    }
-    .field textarea { min-height: 12mm !important; }
-
-    /* Grids anpassen */
-    .field-grid.c2 { gap: 6mm !important; }
-    .field-grid.c3 { gap: 4mm !important; }
-    .field-grid.c4 { grid-template-columns: 1fr 1fr 1fr 1fr !important; gap: 3mm !important; }
-
-    /* Tables */
-    .tbl-wrap { border: 0.5pt solid #CCC !important; overflow: visible !important; }
-    .ptbl { font-size: 7.5pt !important; }
-    .ptbl th {
-      font-size: 6.5pt !important;
-      padding: 1.5mm 2mm !important;
-      background: #00893D !important;
-      color: white !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .ptbl th.green-h { background: #00893D !important; color: white !important; }
-    .ptbl td { padding: 1.5mm 2mm !important; font-size: 7.5pt !important; }
-    .ptbl td input {
-      font-size: 7.5pt !important;
-      min-width: 0 !important;
-    }
-    .ptbl td.mono { font-size: 7pt !important; }
-    .ptbl td.mono.ok  { background: #E6F4EC !important; color: #00893D !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .ptbl td.mono.nok { background: #FDF2F2 !important; color: #D42B2B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-    /* Check rows */
-    .check-row { padding: 1.5mm 0 !important; }
-    .check-label { font-size: 8pt !important; }
-    .check-label .en { font-size: 7pt !important; }
-    .rbtn { padding: 1mm 4mm !important; font-size: 7.5pt !important; border-radius: 0 !important; }
-    .rbtn.ok:has(input:checked)  { background: #E6F4EC !important; color: #006B30 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .rbtn.nok:has(input:checked) { background: #FDF2F2 !important; color: #D42B2B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .rbtn.na:has(input:checked)  { background: #F5F5F5 !important; color: #666 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-    /* Infobox */
-    .infobox {
-      font-size: 7.5pt !important;
-      padding: 2mm 3mm !important;
-      margin-bottom: 3mm !important;
-      border-left: 2.5pt solid #00893D !important;
-      background: #E6F4EC !important;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
-    /* Divider */
-    .divider { margin: 3mm 0 2mm !important; }
-    .divider span { font-size: 7pt !important; padding: 1pt 4pt !important; }
-
-    /* Env cards */
-    .env-cards { gap: 4mm !important; }
-    .env-card { padding: 3mm 4mm !important; border-radius: 0 !important; }
-    .env-card.sel { background: #E6F4EC !important; border-color: #00893D !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .ev-de { font-size: 8.5pt !important; }
-    .ev-en { font-size: 7pt !important; }
-
-    /* Plausibility */
-    /* plaus-grid unused */
-
-
-
-    #plaus-table th { font-size: 6.5pt !important; padding: 1.5mm 2mm !important; }
-    #plaus-table td { font-size: 7.5pt !important; padding: 1mm 2mm !important; }
-    #plaus-table select { font-size: 8pt !important; }
-
-    /* Photo zone */
-    .photo-zone { min-height: 40mm !important; padding: 4mm !important; }
-    .photo-zone img { max-height: 60mm !important; }
-
-    /* Footer strip */
-    .page-footer-strip { font-size: 7pt !important; padding: 2mm 4mm !important; background: #F5F5F5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-
-    /* Plaus count boxes */
-    #s6-ok, #s6-nok { font-size: 14pt !important; }
-
-    /* Anmerkungen */
-    #note-global { min-height: 10mm !important; }
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0e14;
+  --bg2:#111520;
+  --bg3:#161b28;
+  --border:#1e2535;
+  --border2:#252d40;
+  --text:#d8dde8;
+  --text2:#8a95a8;
+  --text3:#5a6478;
+  --accent:#2563eb;
+  --accent-light:#3b82f6;
+  --accent-glow:rgba(37,99,235,0.15);
+  --green:#16a34a;
+  --green-bg:rgba(22,163,74,0.1);
+  --red:#dc2626;
+  --red-bg:rgba(220,38,38,0.1);
+  --amber:#d97706;
+  --amber-bg:rgba(217,119,6,0.1);
+  --font:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+
+/* Layout */
+#app{display:flex;min-height:100vh}
+#sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:.3s}
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#content{flex:1;overflow-y:auto;padding:32px}
+
+/* Sidebar */
+.sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.sidebar-logo .brand{font-size:11px;font-family:var(--mono);letter-spacing:.12em;color:var(--text3);text-transform:uppercase;margin-bottom:4px}
+.sidebar-logo .app-name{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.sidebar-logo .version{font-size:10px;font-family:var(--mono);color:var(--text3);margin-top:2px}
+
+.sidebar-section{padding:16px 12px 8px;font-size:10px;font-family:var(--mono);letter-spacing:.1em;color:var(--text3);text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;margin:1px 8px;border-radius:6px;cursor:pointer;transition:.15s;color:var(--text2);font-size:13px;font-weight:500;border:1px solid transparent}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--accent-glow);border-color:var(--accent);color:var(--accent-light)}
+.nav-item svg{width:16px;height:16px;flex-shrink:0}
+
+.sidebar-method-select{margin:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px}
+.sidebar-method-select label{font-size:10px;font-family:var(--mono);color:var(--text3);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em}
+.sidebar-method-select select{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:var(--font);font-size:12px;padding:6px 8px;border-radius:4px;outline:none;cursor:pointer}
+.sidebar-method-select select:focus{border-color:var(--accent)}
+
+/* Header */
+.h-title{font-size:14px;font-weight:600;color:var(--text)}
+.h-method-badge{font-size:11px;font-family:var(--mono);padding:3px 10px;background:var(--accent-glow);border:1px solid var(--accent);border-radius:20px;color:var(--accent-light);letter-spacing:.04em}
+
+/* Views */
+.view{display:none;animation:fadeIn .2s ease}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Cards */
+.page-title{font-size:22px;font-weight:700;margin-bottom:4px;letter-spacing:-.4px}
+.page-sub{color:var(--text2);font-size:13px;margin-bottom:28px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--text2);text-transform:uppercase;letter-spacing:.05em}
+.card-title svg{width:14px;height:14px}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 20px}
+.stat-card .val{font-size:28px;font-weight:700;font-family:var(--mono);color:var(--text);line-height:1}
+.stat-card .lbl{font-size:11px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+
+/* Method cards (dashboard) */
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.method-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.method-card::before{content:'';position:absolute;inset:0;background:var(--accent-glow);opacity:0;transition:.2s}
+.method-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.method-card:hover::before{opacity:1}
+.method-card.selected{border-color:var(--accent);background:var(--accent-glow)}
+.method-card .method-code{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--accent-light);margin-bottom:6px}
+.method-card .method-name{font-size:12px;color:var(--text2);line-height:1.4}
+
+/* Forms */
+.form-row{display:grid;gap:12px;margin-bottom:12px}
+.form-row.col2{grid-template-columns:1fr 1fr}
+.form-row.col3{grid-template-columns:1fr 1fr 1fr}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:11px;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
+.form-input{background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:var(--font);font-size:13px;padding:9px 12px;border-radius:6px;outline:none;transition:.15s}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.form-input::placeholder{color:var(--text3)}
+select.form-input{cursor:pointer}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:6px;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:.15s;border:none;outline:none;text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-light)}
+.btn-secondary{background:var(--bg3);border:1px solid var(--border2);color:var(--text)}
+.btn-secondary:hover{border-color:var(--accent-light);color:var(--accent-light)}
+.btn-danger{background:var(--red-bg);border:1px solid var(--red);color:var(--red)}
+.btn-danger:hover{background:var(--red);color:#fff}
+.btn-success{background:var(--green-bg);border:1px solid var(--green);color:var(--green)}
+.btn-success:hover{background:var(--green);color:#fff}
+.btn-sm{padding:5px 10px;font-size:12px}
+.btn-icon{padding:6px;border-radius:4px}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Tables */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--text3);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text);font-size:13px;vertical-align:middle}
+tr:hover td{background:var(--bg3)}
+.td-mono{font-family:var(--mono);font-size:12px}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:11px;font-family:var(--mono);font-weight:600}
+.badge-green{background:var(--green-bg);color:var(--green);border:1px solid rgba(22,163,74,.3)}
+.badge-red{background:var(--red-bg);color:var(--red);border:1px solid rgba(220,38,38,.3)}
+.badge-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(217,119,6,.3)}
+.badge-blue{background:var(--accent-glow);color:var(--accent-light);border:1px solid rgba(37,99,235,.3)}
+.badge-gray{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
+
+/* Participant checklist */
+.participant-list{display:flex;flex-direction:column;gap:4px}
+.participant-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:6px}
+.participant-item .p-name{flex:1;font-size:13px;font-weight:500}
+.participant-item .p-id{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.participant-item .p-status{display:flex;gap:6px;align-items:center}
+
+/* Progress */
+.progress{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-bar{height:100%;border-radius:3px;transition:width .3s}
+.progress-bar.green{background:var(--green)}
+.progress-bar.red{background:var(--red)}
+.progress-bar.amber{background:var(--amber)}
+.progress-bar.blue{background:var(--accent)}
+
+/* Part result cards */
+.part-result{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:8px}
+.part-result.pass{border-color:rgba(22,163,74,.4);background:rgba(22,163,74,.05)}
+.part-result.fail{border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.05)}
+.part-result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.part-result-title{font-weight:600;font-size:13px}
+.part-result-score{font-family:var(--mono);font-size:20px;font-weight:700}
+.part-result-score.pass{color:var(--green)}
+.part-result-score.fail{color:var(--red)}
+
+/* Question item (exam view) */
+.question-block{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:10px}
+.question-block .q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--border);padding:2px 6px;border-radius:3px;flex-shrink:0;margin-top:2px}
+.q-text{font-size:13px;line-height:1.6;color:var(--text)}
+.q-options{display:flex;flex-direction:column;gap:6px}
+.q-option{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:5px;cursor:pointer;border:1px solid transparent;transition:.12s}
+.q-option:hover{background:var(--bg2);border-color:var(--border2)}
+.q-option.selected{background:var(--accent-glow);border-color:var(--accent)}
+.q-option.correct{background:var(--green-bg);border-color:rgba(22,163,74,.5)}
+.q-option.wrong{background:var(--red-bg);border-color:rgba(220,38,38,.5)}
+.q-option-label{font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:1px;flex-shrink:0;width:16px}
+.q-option-text{font-size:13px;color:var(--text)}
+input[type=radio]{display:none}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:24px}
+.tab{padding:10px 18px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;transition:.15s;margin-bottom:-1px}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent-light);border-bottom-color:var(--accent-light)}
+
+/* Alerts */
+.alert{padding:12px 16px;border-radius:6px;font-size:13px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px}
+.alert-info{background:var(--accent-glow);border:1px solid rgba(37,99,235,.3);color:var(--text)}
+.alert-warning{background:var(--amber-bg);border:1px solid rgba(217,119,6,.3);color:var(--text)}
+.alert-success{background:var(--green-bg);border:1px solid rgba(22,163,74,.3);color:var(--text)}
+.alert-error{background:var(--red-bg);border:1px solid rgba(220,38,38,.3);color:var(--text)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:28px;max-width:600px;width:90%;max-height:85vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+
+/* Answer grid (results input) */
+.answer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.answer-cell{display:flex;flex-direction:column;gap:4px;align-items:center}
+.answer-cell .q-label{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.answer-input{width:40px;height:32px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--mono);font-size:14px;text-align:center;outline:none;text-transform:uppercase}
+.answer-input:focus{border-color:var(--accent)}
+.answer-input.correct{border-color:var(--green);background:var(--green-bg)}
+.answer-input.incorrect{border-color:var(--red);background:var(--red-bg)}
+
+/* Exam digital mode */
+.exam-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+.exam-progress-bar{height:3px;background:var(--border);position:fixed;top:0;left:0;right:0;z-index:50}
+.exam-progress-fill{height:100%;background:var(--accent);transition:width .3s}
+.part-nav{display:flex;gap:4px}
+.part-nav-item{padding:5px 12px;border-radius:4px;font-family:var(--mono);font-size:11px;cursor:pointer;border:1px solid var(--border2);color:var(--text3);transition:.15s}
+.part-nav-item:hover{border-color:var(--accent-light);color:var(--accent-light)}
+.part-nav-item.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.part-nav-item.completed{background:var(--green-bg);border-color:rgba(22,163,74,.4);color:var(--green)}
+
+/* Print Styles */
+@media print{
+  #sidebar,#header,.no-print{display:none!important}
+  #main{margin:0}
+  #content{padding:0;overflow:visible}
+  body{background:#fff;color:#000;font-size:12pt}
+  .card{border:1pt solid #ccc;break-inside:avoid}
+  .question-block{break-inside:avoid;border:1pt solid #ccc}
+  .page-break{break-before:page}
+  .print-only{display:block!important}
+  *{box-shadow:none!important}
+}
+.print-only{display:none}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* Toast */
+#toast{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:8px}
+.toast-item{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:12px 16px;font-size:13px;max-width:320px;animation:slideIn .2s ease;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.toast-item.success{border-color:rgba(22,163,74,.5)}
+.toast-item.error{border-color:rgba(220,38,38,.5)}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* Utility */
+.flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap8{gap:8px}.gap12{gap:12px}.mb4{margin-bottom:4px}.mb8{margin-bottom:8px}.mb16{margin-bottom:16px}.mb24{margin-bottom:24px}
+.text-sm{font-size:12px}.text-xs{font-size:11px}.text-mono{font-family:var(--mono)}.text-muted{color:var(--text2)}.text-dim{color:var(--text3)}.text-green{color:var(--green)}.text-red{color:var(--red)}.text-amber{color:var(--amber)}.text-accent{color:var(--accent-light)}.font-bold{font-weight:700}.font-semi{font-weight:600}
+.mt8{margin-top:8px}.mt16{margin-top:16px}.mt24{margin-top:24px}
+.w100{width:100%}
+.separator{border:none;border-top:1px solid var(--border);margin:20px 0}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:13px;margin-bottom:16px}
 </style>
 </head>
 <body>
 
-<!-- TOAST -->
+<div id="app">
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">Schaeffler · ZfP</div>
+    <div class="app-name">Prüfungssystem</div>
+    <div class="version">v2.0 · DGZfP konform</div>
+  </div>
+
+  <div class="sidebar-method-select">
+    <label>Aktive Prüfmethode</label>
+    <select id="globalMethod" onchange="setGlobalMethod(this.value)">
+      <option value="">— Methode wählen —</option>
+      <option value="ET">ET · Wirbelstromprüfung</option>
+      <option value="UT">UT · Ultraschallprüfung</option>
+      <option value="NE">NE · Ätzprüfung</option>
+      <option value="MT">MT · Magnetpulverprüfung</option>
+      <option value="PT">PT · Eindringprüfung</option>
+      <option value="BN">BN · Barkhausen Rauschen</option>
+    </select>
+  </div>
+
+  <div class="sidebar-section">Navigation</div>
+  <div class="nav-item active" onclick="nav('dashboard')" data-view="dashboard">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    Dashboard
+  </div>
+  <div class="nav-item" onclick="nav('participants')" data-view="participants">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    Teilnehmer
+  </div>
+  <div class="nav-item" onclick="nav('newTraining')" data-view="newTraining">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+    Neue Schulung
+  </div>
+  <div class="nav-item" onclick="nav('trainings')" data-view="trainings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    Schulungen
+  </div>
+  <div class="nav-item" onclick="nav('history')" data-view="history">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Verlauf & Archiv
+  </div>
+
+  <div class="sidebar-section">System</div>
+  <div class="nav-item" onclick="nav('settings')" data-view="settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 12 2a10 10 0 0 0-7.07 2.93"/><path d="M2.93 19.07A10 10 0 0 0 12 22a10 10 0 0 0 7.07-2.93"/><path d="M2.93 4.93l18.14 14.14"/></svg>
+    Einstellungen
+  </div>
+
+  <div style="margin-top:auto;padding:12px 8px;border-top:1px solid var(--border)">
+    <div style="font-size:10px;font-family:var(--mono);color:var(--text3);padding:0 8px;line-height:1.6">
+      Fragen ges.: <span id="totalQCount" class="text-accent">—</span><br>
+      Letzte Sync: <span id="lastSync">—</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Main -->
+<div id="main">
+  <div id="header">
+    <div class="flex items-center gap8">
+      <div class="h-title" id="headerTitle">Dashboard</div>
+      <div class="h-method-badge" id="headerMethod" style="display:none"></div>
+    </div>
+    <div class="flex gap8">
+      <button class="btn btn-secondary btn-sm no-print" onclick="exportData()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export
+      </button>
+      <button class="btn btn-secondary btn-sm no-print" onclick="document.getElementById('importFile').click()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Import
+      </button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view active">
+      <div class="page-title">Prüfungssystem · ZfP</div>
+      <div class="page-sub">Übersicht und Schnellzugriff</div>
+
+      <div class="stats-row" id="dashStats"></div>
+
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+              Aktuelle Schulungen
+            </div>
+            <div id="dashTrainings"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Bestehensquoten
+            </div>
+            <div id="dashStats2"></div>
+          </div>
+          <div class="card" style="margin-top:0">
+            <div class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Rezertifizierung fällig
+            </div>
+            <div id="dashRecert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTICIPANTS -->
+    <div id="view-participants" class="view">
+      <div class="page-title">Teilnehmerverwaltung</div>
+      <div class="page-sub">Mitarbeiterdatenbank für ZfP-Prüfungen</div>
+      <div class="btn-group mb24">
+        <button class="btn btn-primary" onclick="openAddParticipant()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Teilnehmer hinzufügen
+        </button>
+        <button class="btn btn-secondary" onclick="importParticipantsCSV()">CSV importieren</button>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <input class="form-input" style="flex:1" placeholder="Suchen nach Name oder Personal-Nr." oninput="renderParticipants(this.value)" id="participantSearch">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>Name</th><th>Personal-Nr.</th><th>Abteilung</th><th>Letzte Prüfung</th><th>Rezertifiz. fällig</th><th></th>
+            </tr></thead>
+            <tbody id="participantsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW TRAINING -->
+    <div id="view-newTraining" class="view">
+      <div class="page-title">Neue Schulung anlegen</div>
+      <div class="page-sub">Schulungsprüfung konfigurieren und Fragen generieren</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div>
+          <div class="card">
+            <div class="card-title">Schulungsdaten</div>
+            <div class="form-row col2">
+              <div class="form-group">
+                <label class="form-label">Prüfmethode *</label>
+                <select class="form-input" id="nt-method" onchange="updateNTMethod()">
+                  <option value="">— wählen —</option>
+                  <option value="ET">ET · Wirbelstromprüfung</option>
+                  <option value="UT">UT · Ultraschallprüfung</option>
+                  <option value="NE">NE · Ätzprüfung</option>
+                  <option value="MT">MT · Magnetpulverprüfung</option>
+                  <option value="PT">PT · Eindringprüfung</option>
+                  <option value="BN">BN · Barkhausen Rauschen</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Prüfdatum *</label>
+                <input class="form-input" type="date" id="nt-date">
+              </div>
+            </div>
+            <div class="form-row col2">
+              <div class="form-group">
+                <label class="form-label">Schulungsort</label>
+                <input class="form-input" type="text" id="nt-location" placeholder="z.B. Schweinfurt Werk 1">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Prüfer / Ausbilder</label>
+                <input class="form-input" type="text" id="nt-trainer" placeholder="Name des Prüfers">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Schulungs-Bezeichnung</label>
+              <input class="form-input" type="text" id="nt-name" placeholder="z.B. ET Level 1 Grundkurs 2026">
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Fragenanzahl pro Teil</div>
+            <div class="form-row col3">
+              <div class="form-group">
+                <label class="form-label">Allg. Teil (AT)</label>
+                <input class="form-input" type="number" id="nt-count-at" value="20" min="5" max="35">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Spez. Teil (ST)</label>
+                <input class="form-input" type="number" id="nt-count-st" value="15" min="5" max="20">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Prakt. Teil (PR)</label>
+                <input class="form-input" type="number" id="nt-count-pr" value="8" min="3" max="10">
+              </div>
+            </div>
+            <div class="alert alert-info" style="margin-top:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="8"/></svg>
+              <span>Bestehensbedingung: ≥ 80% je Teil. 25%-Neu-Garantie wird automatisch sichergestellt.</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-title">Teilnehmerliste</div>
+            <div class="flex gap8 mb16">
+              <input class="form-input" style="flex:1" placeholder="Name oder Personal-Nr. suchen" id="nt-search" oninput="renderNTSearch(this.value)">
+              <button class="btn btn-secondary btn-sm" onclick="addAllParticipants()">Alle hinzufügen</button>
+            </div>
+            <div id="nt-search-results" style="max-height:200px;overflow-y:auto;margin-bottom:12px"></div>
+            <div class="separator"></div>
+            <div style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:8px">AUSGEWÄHLT (<span id="nt-selected-count">0</span>)</div>
+            <div id="nt-selected-list" style="max-height:200px;overflow-y:auto"></div>
+          </div>
+
+          <div class="card" id="nt-new-participant-card">
+            <div class="card-title">Neuen Teilnehmer anlegen</div>
+            <div class="form-row col2">
+              <div class="form-group">
+                <label class="form-label">Vollständiger Name</label>
+                <input class="form-input" type="text" id="nt-np-name" placeholder="Max Mustermann">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Personal-Nr.</label>
+                <input class="form-input" type="text" id="nt-np-id" placeholder="12345">
+              </div>
+            </div>
+            <div class="form-group mb16">
+              <label class="form-label">Abteilung</label>
+              <input class="form-input" type="text" id="nt-np-dept" placeholder="WI/SW2-PQT">
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="addNewParticipantFromNT()">Anlegen &amp; hinzufügen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap8 mt16 no-print">
+        <button class="btn btn-primary" onclick="generateTraining()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Prüfung generieren
+        </button>
+        <button class="btn btn-secondary" onclick="resetNewTraining()">Zurücksetzen</button>
+      </div>
+    </div>
+
+    <!-- TRAININGS LIST -->
+    <div id="view-trainings" class="view">
+      <div class="page-title">Schulungen</div>
+      <div class="page-sub">Alle angelegten Prüfungseinheiten</div>
+      <div id="trainings-list"></div>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="view-history" class="view">
+      <div class="page-title">Verlauf &amp; Archiv</div>
+      <div class="page-sub">Prüfungshistorie der letzten 4 Jahre (Rezertifizierungszeitraum)</div>
+      <div class="form-row col2" style="max-width:600px;margin-bottom:24px">
+        <div class="form-group">
+          <label class="form-label">Teilnehmer filtern</label>
+          <input class="form-input" id="history-search-name" placeholder="Name..." oninput="renderHistory()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Methode</label>
+          <select class="form-input" id="history-method" onchange="renderHistory()">
+            <option value="">Alle Methoden</option>
+            <option value="ET">ET · Wirbelstromprüfung</option>
+            <option value="UT">UT · Ultraschallprüfung</option>
+            <option value="NE">NE · Ätzprüfung</option>
+            <option value="MT">MT · Magnetpulverprüfung</option>
+            <option value="PT">PT · Eindringprüfung</option>
+            <option value="BN">BN · Barkhausen Rauschen</option>
+          </select>
+        </div>
+      </div>
+      <div id="history-content"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="view-settings" class="view">
+      <div class="page-title">Einstellungen</div>
+      <div class="page-sub">Systemkonfiguration</div>
+      <div class="card" style="max-width:560px">
+        <div class="card-title">Fragen-Datenbank</div>
+        <div id="question-db-info" class="mb16"></div>
+        <button class="btn btn-secondary" onclick="reloadQuestions()">Fragen neu laden</button>
+      </div>
+      <div class="card" style="max-width:560px">
+        <div class="card-title">Datenverwaltung</div>
+        <div class="alert alert-warning mb16">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
+          Alle gespeicherten Daten aus dem Browser-Cache löschen.
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-danger" onclick="clearAllData()">Alle Daten löschen</button>
+          <button class="btn btn-secondary" onclick="exportData()">Daten sichern</button>
+        </div>
+      </div>
+      <div class="card" style="max-width:560px">
+        <div class="card-title">Über das System</div>
+        <div class="text-sm text-muted" style="line-height:2">
+          <b>ZfP Prüfungssystem v2.0</b><br>
+          Norm: DIN EN ISO 9712 · Bestehensschwelle: 80% je Teil<br>
+          Rezertifizierungszeitraum: 4 Jahre<br>
+          25%-Neu-Fragen-Garantie: Automatisch sichergestellt<br>
+          Datenspeicherung: Browser LocalStorage<br>
+          <span class="text-dim">Schaeffler Technologies AG &amp; Co. KG · WI/SW2-PQT</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRAINING DETAIL (dynamic) -->
+    <div id="view-trainingDetail" class="view">
+      <div id="training-detail-content"></div>
+    </div>
+
+    <!-- EXAM MODE (digital) -->
+    <div id="view-examMode" class="view">
+      <div id="exam-mode-content"></div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="modal-addParticipant">
+  <div class="modal">
+    <div class="modal-title">Teilnehmer hinzufügen</div>
+    <div class="modal-sub">Neuen Prüfungsteilnehmer anlegen</div>
+    <div class="form-row col2">
+      <div class="form-group">
+        <label class="form-label">Vollständiger Name *</label>
+        <input class="form-input" id="ap-name" placeholder="Max Mustermann">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Personal-Nr. *</label>
+        <input class="form-input" id="ap-empid" placeholder="12345">
+      </div>
+    </div>
+    <div class="form-group mb16">
+      <label class="form-label">Abteilung</label>
+      <input class="form-input" id="ap-dept" placeholder="WI/SW2-PQT">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-addParticipant')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveParticipant()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- Results modal -->
+<div class="modal-overlay" id="modal-results">
+  <div class="modal" style="max-width:800px">
+    <div class="modal-title">Ergebnisse erfassen</div>
+    <div class="modal-sub" id="results-modal-sub">Antworten eintragen</div>
+    <div id="results-modal-content"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-results')">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveResults()">Ergebnisse speichern</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
-<!-- PRINT HEADER (nur im Druck sichtbar) -->
-<div class="print-page-header" style="display:none" id="print-header">
-  <div class="print-logo-block">&#9673; SCHAEFFLER</div>
-  <div class="print-doc-info">
-    <div class="title">Prüfprotokoll &ndash; Rohmann Elotest PL500</div>
-    <div class="sub">Plant Test Protocol &middot; Version C 2021-06 &middot; Nach P172020 Anlage 2</div>
-  </div>
-  <div class="print-doc-nr" id="print-nr-display">Nr.: &mdash;</div>
-</div>
-
-<!-- OVERLAY für mobile Sidebar -->
-<div id="mob-overlay" onclick="closeSidebar()"></div>
-
-<!-- HEADER -->
-<header>
-  <div class="header-logo-strip">
-    <div class="schaeffler-wordmark">
-      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="16" cy="16" r="14" stroke="white" stroke-width="2"/>
-        <circle cx="16" cy="16" r="7" fill="white" fill-opacity="0.2"/>
-        <circle cx="16" cy="16" r="3" fill="white"/>
-        <circle cx="16" cy="6" r="2" fill="white"/>
-        <circle cx="16" cy="26" r="2" fill="white"/>
-        <circle cx="6" cy="16" r="2" fill="white"/>
-        <circle cx="26" cy="16" r="2" fill="white"/>
-      </svg>
-      SCHAEFFLER
-    </div>
-  </div>
-  <div class="header-content">
-    <button id="mob-menu-btn" onclick="toggleSidebar()" aria-label="Menü">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="header-doc-info">
-      <div class="header-doc-title">Prüfprotokoll – Rohmann Elotest PL500</div>
-      <div class="header-doc-sub">Plant Test Protocol · Version C 2021-06 · Nach P172020 Anlage 2</div>
-    </div>
-    <div class="header-actions">
-      <button class="btn btn-ghost" onclick="resetForm()">↺ Zurücksetzen</button>
-      <button class="btn btn-outline" onclick="exportJSON()">⬇ JSON Export</button>
-      <button class="btn btn-green" onclick="window.print()">🖨 Als PDF speichern</button>
-    </div>
-  </div>
-</header>
-
-<!-- LAYOUT -->
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <nav class="sidebar">
-    <div class="sidebar-section-label">Allgemein</div>
-    <a class="nav-link active" onclick="navTo('s-cover')">📋 Deckblatt <span class="nav-badge">S1</span></a>
-    <a class="nav-link" onclick="navTo('s-photo')">🖼 Skizze / Foto <span class="nav-badge">S2</span></a>
-    <a class="nav-link" onclick="navTo('s-equip')">🔧 Messeinrichtung <span class="nav-badge">S2</span></a>
-    <a class="nav-link" onclick="navTo('s-env')">🌡 Umgebung <span class="nav-badge">S2</span></a>
-    <div class="sidebar-section-label">Prüfungen</div>
-    <a class="nav-link" onclick="navTo('s1')"><span style="color:var(--schaeffler-green);font-weight:700">1</span>&nbsp; Sichtprüfung <span class="nav-badge" id="nav-s1">—</span></a>
-    <a class="nav-link" onclick="navTo('s2')"><span style="color:var(--schaeffler-green);font-weight:700">2</span>&nbsp; Funktionsprüfung <span class="nav-badge" id="nav-s2">—</span></a>
-    <a class="nav-link" onclick="navTo('s3')"><span style="color:var(--schaeffler-green);font-weight:700">3</span>&nbsp; Senderfrequenz <span class="nav-badge" id="nav-s3">—</span></a>
-    <a class="nav-link" onclick="navTo('s4')"><span style="color:var(--schaeffler-green);font-weight:700">4</span>&nbsp; Verstärkerstufen <span class="nav-badge" id="nav-s4">—</span></a>
-    <a class="nav-link" onclick="navTo('s5')"><span style="color:var(--schaeffler-green);font-weight:700">5</span>&nbsp; Frequenzfilter <span class="nav-badge" id="nav-s5">—</span></a>
-    <a class="nav-link" onclick="navTo('s6')"><span style="color:var(--schaeffler-green);font-weight:700">6</span>&nbsp; Plausitest <span class="nav-badge" id="nav-s6">—</span></a>
-    <div class="sidebar-section-label">Abschluss</div>
-    <a class="nav-link" onclick="navTo('s-sign')">✍ Unterschriften</a>
-    <div style="padding: 20px 20px 8px; border-top: 1px solid var(--gray-10); margin-top: 12px;">
-      <div style="font-size:11px;color:var(--gray-40);line-height:1.6">
-        Rohmann Elotest PL500<br>
-        Wirbelstromprüfgerät<br>
-        Rev: 0
-      </div>
-    </div>
-  </nav>
-
-  <!-- MAIN -->
-  <main>
-
-    <!-- SUMMARY BAR -->
-    <div class="summary-bar">
-      <div class="summary-item">
-        <span class="s-label">Protokoll-Nr.</span>
-        <span class="s-value blue" id="sum-nr">—</span>
-      </div>
-      <div class="summary-item">
-        <span class="s-label">Sichtprüfung</span>
-        <span class="s-value" id="sum-s1">—</span>
-      </div>
-      <div class="summary-item">
-        <span class="s-label">Funktionsprüf.</span>
-        <span class="s-value" id="sum-s2">—</span>
-      </div>
-      <div class="summary-item">
-        <span class="s-label">Senderfrequenz</span>
-        <span class="s-value" id="sum-s3">—</span>
-      </div>
-      <div class="summary-item">
-        <span class="s-label">Verstärkung</span>
-        <span class="s-value" id="sum-s4">—</span>
-      </div>
-      <div class="summary-item">
-        <span class="s-label">Filter</span>
-        <span class="s-value" id="sum-s5">—</span>
-      </div>
-      <div class="summary-item">
-        <span class="s-label">Plausitest</span>
-        <span class="s-value" id="sum-s6">—</span>
-      </div>
-      <div class="summary-item" style="padding-right:0;border-right:none">
-        <span class="s-label">⚑ Gesamtergebnis</span>
-        <span class="s-value" id="sum-total">—</span>
-      </div>
-    </div>
-
-    <!-- ── DECKBLATT ──────────────────────────── -->
-    <div class="card" id="s-cover">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num neutral">📋</div>
-        <div class="card-title-wrap">
-          <div class="card-title-de">Deckblatt</div>
-          <div class="card-title-en">Cover Sheet — Page 1 of 8</div>
-        </div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="infobox">
-          <strong>Nach P172020 Anlage 2 / In accordance with P172020 Appendix 2</strong> — Version C 2021-06<br>
-          Die Prüfung erfolgt auf der Grundlage dokumentierter Verfahren unter Berücksichtigung von P 172020. Dieser Prüfprotokoll dokumentiert die Rückführung auf nationale oder internationale Normale (SI). Die angegebenen Messunsicherheiten beziehen sich auf ein Vertrauensniveau von 95% (k=2).
-        </div>
-        <div class="field-grid c2">
-          <div class="field"><label class="field-label">Prüfprotokoll-Nr. <span>Inspection report no.</span></label><input type="text" id="f-nr" placeholder="z.B. 2024-001" oninput="updateSummary()"></div>
-          <div class="field"><label class="field-label">Prüflaboratorium <span>Testing laboratory</span></label><input type="text" id="f-lab" placeholder="Labor / Laboratory"></div>
-        </div>
-        <div class="field-grid c2">
-          <div class="field"><label class="field-label">Abteilung <span>Department</span></label><input type="text" id="f-dept" placeholder="Abteilung / Department"></div>
-          <div class="field"><label class="field-label">Art des Normals <span>Type of measurement standard</span></label><input type="text" id="f-normal" value="Prüfgerät / test device"></div>
-        </div>
-        <div class="divider"><span>Prüfgegenstand / Test Object</span></div>
-        <div class="field-grid c3">
-          <div class="field"><label class="field-label">Gegenstand <span>Object</span></label><input type="text" id="f-obj" value="Wirbelstromprüfgerät / Eddy current testing device"></div>
-          <div class="field"><label class="field-label">Typ <span>Type</span></label><input type="text" id="f-type" value="PL500"></div>
-          <div class="field"><label class="field-label">Equipmentnummer <span>Equipment number</span></label><input type="text" id="f-equipnr" placeholder="Equipment No."></div>
-        </div>
-        <div class="field-grid c3">
-          <div class="field"><label class="field-label">Prüfverfahren <span>Test method</span></label><input type="text" id="f-method" value="nach / according to S285065"></div>
-          <div class="field"><label class="field-label">Auftraggeber <span>Customer</span></label><input type="text" id="f-customer" placeholder="Kunde / Customer"></div>
-          <div class="field"><label class="field-label">Auftragsnummer <span>Order number</span></label><input type="text" id="f-ordernr" placeholder="Auftrag-Nr."></div>
-        </div>
-        <div class="field-grid c2">
-          <div class="field"><label class="field-label">Datum der Inspektion <span>Date of inspection</span></label><input type="date" id="f-date"></div>
-          <div class="field"><label class="field-label">Ausstellungsdatum <span>Date of issue</span></label><input type="date" id="f-issue"></div>
-        </div>
-        <div class="page-footer-strip">
-          <span><strong>Page 1 of 8</strong></span>
-          <span>Schaeffler Group</span>
-          <span>Rev: 0</span>
-          <span>Nach P172020 Anlage 2</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── SKIZZE / FOTO ───────────────────────── -->
-    <div class="card" id="s-photo">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num neutral">🖼</div>
-        <div class="card-title-wrap"><div class="card-title-de">Skizze / Foto</div><div class="card-title-en">Diagram / Photo — Page 2 of 8</div></div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="photo-zone" id="photo-zone" onclick="document.getElementById('photo-input').click()" ondrop="dropPhoto(event)" ondragover="event.preventDefault()">
-          <div id="photo-ph"><div class="photo-icon">📷</div><div style="font-size:14px;font-weight:700;color:var(--gray-80)">Foto oder Skizze hochladen</div><div style="font-size:12px;margin-top:4px">Drag & Drop oder Klick</div></div>
-          <img id="photo-prev" style="display:none">
-        </div>
-        <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="loadPhoto(event)">
-        <button class="btn btn-outline" style="margin-top:10px;font-size:12px" onclick="clearPhoto()">× Foto entfernen</button>
-      </div>
-    </div>
-
-    <!-- ── MESSEINRICHTUNG ─────────────────────── -->
-    <div class="card" id="s-equip">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num neutral">🔧</div>
-        <div class="card-title-wrap"><div class="card-title-de">Messeinrichtung</div><div class="card-title-en">Measuring Equipment</div></div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="tbl-wrap">
-          <table class="ptbl">
-            <thead>
-              <tr>
-                <th class="green-h">Bezeichnung / Designation</th>
-                <th class="green-h">Equipmentnummer / Equipment number</th>
-                <th class="green-h">Kalibrierschein / Calibration certificate</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><input type="text" value="Oszilloskop / Oscilloscope"></td><td><input type="text" id="eq1-eq" placeholder="Eq. No."></td><td><input type="text" id="eq1-cal" placeholder="Cal. No."></td></tr>
-              <tr><td><input type="text" value="Systemtester / System tester"></td><td><input type="text" id="eq2-eq" placeholder="Eq. No."></td><td><input type="text" id="eq2-cal" placeholder="Cal. No."></td></tr>
-              <tr><td><input type="text" value="Sensor / Probe"></td><td><input type="text" id="eq3-eq" placeholder="Eq. No."></td><td><input type="text" id="eq3-cal" placeholder="Cal. No."></td></tr>
-              <tr><td><input type="text" value="Signalgenerator / Signal generator"></td><td><input type="text" id="eq4-eq" placeholder="Eq. No."></td><td><input type="text" id="eq4-cal" placeholder="Cal. No."></td></tr>
-              <tr><td><input type="text" value="Stufenabschwächer / Attenuator"></td><td><input type="text" id="eq5-eq" placeholder="Eq. No."></td><td><input type="text" id="eq5-cal" placeholder="Cal. No."></td></tr>
-              <tr><td><input type="text" value="Drehzahlmesser / Speed meter"></td><td><input type="text" id="eq6-eq" placeholder="Eq. No."></td><td><input type="text" id="eq6-cal" placeholder="Cal. No."></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── UMGEBUNGSBEDINGUNGEN ───────────────── -->
-    <div class="card" id="s-env">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num neutral">🌡</div>
-        <div class="card-title-wrap"><div class="card-title-de">Umgebungsbedingungen</div><div class="card-title-en">Environmental Conditions</div></div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="env-cards">
-          <label class="env-card sel" onclick="selEnv(this)">
-            <input type="radio" name="env" value="production" checked>
-            <div class="ev-de">Produktionsumfeld</div>
-            <div class="ev-en">in the production</div>
-          </label>
-          <label class="env-card" onclick="selEnv(this)">
-            <input type="radio" name="env" value="laboratory">
-            <div class="ev-de">Labor</div>
-            <div class="ev-en">laboratory</div>
-          </label>
-        </div>
-        <div class="field-grid c3" style="margin-top:18px">
-          <div class="field"><label class="field-label">Temperatur (°C)</label><input type="number" id="f-temp" placeholder="20"></div>
-          <div class="field"><label class="field-label">Luftfeuchtigkeit (%)</label><input type="number" id="f-hum" placeholder="50"></div>
-          <div class="field"><label class="field-label">Messergebnisse <span>Measurement results</span></label><input type="text" id="f-mesres" placeholder="Ergebnisse"></div>
-        </div>
-        <div class="field" style="margin-top:16px"><label class="field-label">Anmerkung / Note</label><textarea id="note-global" placeholder="Anmerkungen zum Protokoll..."></textarea></div>
-      </div>
-    </div>
-
-    <!-- ── PRÜFUNG 1: SICHTPRÜFUNG ────────────── -->
-    <div class="card" id="s1">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num">1</div>
-        <div class="card-title-wrap"><div class="card-title-de">Sichtprüfung</div><div class="card-title-en">Visual Test — Page 3 of 8</div></div>
-        <div class="card-status pend" id="stat-s1">—</div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="infobox">Auf Beschädigung, Leckagen, scharfe Kanten und Grate, Korrosion, Sauberkeit und Lesbarkeit von Strichskalen und Ziffern.<br><em>On damage, leaks, sharp edges and burrs, corrosion, cleanliness and legibility of line scales and numerals.</em></div>
-        <div id="checks-s1">
-          <div class="check-row"><div class="check-label">Prüflingsaufnahme auf Verschleiß prüfen<div class="en">Check test specimen holder for wear</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s1-1" value="ok" onchange="updateStat('s1')"> ok</label><label class="rbtn nok"><input type="radio" name="s1-1" value="nok" onchange="updateStat('s1')"> nok</label><label class="rbtn na"><input type="radio" name="s1-1" value="na" onchange="updateStat('s1')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Beschädigung, Leckagen, scharfe Kanten und Grate<div class="en">Damage, leaks, sharp edges and burrs</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s1-2" value="ok" onchange="updateStat('s1')"> ok</label><label class="rbtn nok"><input type="radio" name="s1-2" value="nok" onchange="updateStat('s1')"> nok</label><label class="rbtn na"><input type="radio" name="s1-2" value="na" onchange="updateStat('s1')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Korrosion, Sauberkeit<div class="en">Corrosion, cleanliness</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s1-3" value="ok" onchange="updateStat('s1')"> ok</label><label class="rbtn nok"><input type="radio" name="s1-3" value="nok" onchange="updateStat('s1')"> nok</label><label class="rbtn na"><input type="radio" name="s1-3" value="na" onchange="updateStat('s1')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Lesbarkeit von Strichskalen und Ziffern<div class="en">Legibility of line scales and numerals</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s1-4" value="ok" onchange="updateStat('s1')"> ok</label><label class="rbtn nok"><input type="radio" name="s1-4" value="nok" onchange="updateStat('s1')"> nok</label><label class="rbtn na"><input type="radio" name="s1-4" value="na" onchange="updateStat('s1')"> n.a.</label></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── PRÜFUNG 2: FUNKTIONSPRÜFUNG ───────── -->
-    <div class="card" id="s2">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num">2</div>
-        <div class="card-title-wrap"><div class="card-title-de">Funktionsprüfung</div><div class="card-title-en">Functional Test — Page 3 of 8</div></div>
-        <div class="card-status pend" id="stat-s2">—</div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div id="checks-s2">
-          <div class="check-row"><div class="check-label">Verstellbarkeit in Ordnung<div class="en">Adjustability okay</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-1" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-1" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-1" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Sondenaufnahme muss sauber klemmbar sein<div class="en">Probe holder: the probe must be cleanly clampable</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-2" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-2" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-2" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Bewegung der Achsen gleichmäßig bis in die Endposition<div class="en">Movement of the axes evenly up to the end position</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-3" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-3" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-3" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Auflösung in Ordnung<div class="en">Resolution in order</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-4" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-4" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-4" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Messablauf (Automatik) in Ordnung<div class="en">Measured sequence (automatic) OK</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-5" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-5" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-5" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Messablauf (Einrichten) in Ordnung<div class="en">Measured sequence (setup) OK</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-6" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-6" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-6" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Funktion der Bedienungselemente in Ordnung<div class="en">Function of the operating elements OK</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-7" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-7" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-7" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Funktion der Endschalter in Ordnung<div class="en">Function of the limit switches OK</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-8" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-8" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-8" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Drehzahl entspricht Maschineneinstellung<div class="en">Rotation speed corresponds to setting</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-9" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-9" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-9" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-          <div class="check-row"><div class="check-label">Ausschussweiche funktionsfähig<div class="en">NOK segregation OK</div></div><div class="radio-group"><label class="rbtn ok"><input type="radio" name="s2-10" value="ok" onchange="updateStat('s2')"> ok</label><label class="rbtn nok"><input type="radio" name="s2-10" value="nok" onchange="updateStat('s2')"> nok</label><label class="rbtn na"><input type="radio" name="s2-10" value="na" onchange="updateStat('s2')"> n.a.</label></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── PRÜFUNG 3: SENDERFREQUENZ ─────────── -->
-    <div class="card" id="s3">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num">3</div>
-        <div class="card-title-wrap"><div class="card-title-de">Prüfung der Senderfrequenz</div><div class="card-title-en">Test of Sending Frequency — Page 4 of 8</div></div>
-        <div class="tolerance-tag">Tol: ≤ 1%</div>
-        <div class="card-status pend" id="stat-s3">—</div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="infobox">Abweichung wird automatisch berechnet. Toleranz: ≤ 1% (0.01) &nbsp;|&nbsp; <em>Deviation is automatically calculated. Tolerance: ≤ 1%</em></div>
-        <div class="divider"><span>Kanal 1 / Channel 1</span></div>
-        <div class="tbl-wrap"><table class="ptbl"><thead><tr><th class="green-h">ET-Gerät Anzeige</th><th class="green-h">Einheit</th><th class="green-h">Oszilloskop Anzeige</th><th class="green-h">Abweichung *</th><th class="green-h">Status</th></tr></thead><tbody id="frq-c1"></tbody></table></div>
-        <div class="divider" style="margin-top:20px"><span>Kanal 2 / Channel 2</span></div>
-        <div class="tbl-wrap"><table class="ptbl"><thead><tr><th class="green-h">ET-Gerät Anzeige</th><th class="green-h">Einheit</th><th class="green-h">Oszilloskop Anzeige</th><th class="green-h">Abweichung *</th><th class="green-h">Status</th></tr></thead><tbody id="frq-c2"></tbody></table></div>
-        <p style="font-size:11px;color:var(--gray-40);margin-top:8px">* Automatisch gerechnet / Automatically calculated</p>
-      </div>
-    </div>
-
-    <!-- ── PRÜFUNG 4: VERSTÄRKERSTUFEN ──────── -->
-    <div class="card" id="s4">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num">4</div>
-        <div class="card-title-wrap"><div class="card-title-de">Genauigkeit der Verstärkerstufen</div><div class="card-title-en">Accuracy of Amplification Steps — Page 5 of 8</div></div>
-        <div class="tolerance-tag">Tol: ≤ 2 dB</div>
-        <div class="card-status pend" id="stat-s4">—</div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="infobox">Abweichung ≤ 2 dB. Einstellung wird automatisch berechnet (Initialwert + Stufe). <em>Deviation ≤ 2 dB. Setting auto-calculated.</em></div>
-        <div class="divider"><span>Starteinstellung / Initial Setting</span></div>
-        <div class="field-grid c4" style="margin-bottom:20px">
-          <div class="field"><label class="field-label">Prüffrequenz</label><input type="number" id="s4-freq" value="1" step="0.01" oninput="recalcAmp()"> <small style="color:var(--gray-40)">MHz</small></div>
-          <div class="field"><label class="field-label">Vorverstärkung</label><input type="number" id="s4-preamp" value="0"> <small style="color:var(--gray-40)">dB</small></div>
-          <div class="field"><label class="field-label">Hauptverstärkung</label><input type="number" id="s4-mainamp" value="18"> <small style="color:var(--gray-40)">dB</small></div>
-          <div class="field"><label class="field-label">Generator Amplitude</label><input type="number" id="s4-gamp" value="5"> <small style="color:var(--gray-40)">V</small></div>
-        </div>
-        <div class="field-grid c2" style="margin-bottom:20px">
-          <div class="field"><label class="field-label">Initialwert Kanal 1 / Initial CH1</label><input type="number" id="s4-init1" placeholder="dB" oninput="recalcAmp()"> <small style="color:var(--gray-40)">dB</small></div>
-          <div class="field"><label class="field-label">Initialwert Kanal 2 / Initial CH2</label><input type="number" id="s4-init2" placeholder="dB" oninput="recalcAmp()"> <small style="color:var(--gray-40)">dB</small></div>
-        </div>
-        <div class="divider"><span>Kanal 1 / Channel 1</span></div>
-        <div class="tbl-wrap"><table class="ptbl"><thead>
-          <tr>
-            <th class="green-h" rowspan="2">Stufe D<br><small style="font-weight:400">[dB]</small></th>
-            <th colspan="2" class="green-h">Nach Abschwächung (H)<br><small style="font-weight:400">after attenuation — ET-Gerät Anzeige</small></th>
-            <th colspan="2" class="green-h">Vor Abschwächung (J)<br><small style="font-weight:400">before attenuation — ET-Gerät Anzeige</small></th>
-            <th colspan="2" class="green-h">Abweichung * = |J+D−H|<br><small style="font-weight:400">Toleranz ≤ 2 dB</small></th>
-            <th colspan="2" class="green-h">Einstellung Abschwächer *<br><small style="font-weight:400">= Init + D</small></th>
-          </tr>
-          <tr><th>X [dB]</th><th>Y [dB]</th><th>X [dB]</th><th>Y [dB]</th><th>X</th><th>Y</th><th>X</th><th>Y</th></tr>
-        </thead><tbody id="amp-c1"></tbody></table></div>
-        <div class="divider" style="margin-top:20px"><span>Kanal 2 / Channel 2</span></div>
-        <div class="tbl-wrap"><table class="ptbl"><thead>
-          <tr>
-            <th class="green-h" rowspan="2">Stufe D<br><small style="font-weight:400">[dB]</small></th>
-            <th colspan="2" class="green-h">Nach Abschwächung (H)<br><small style="font-weight:400">after attenuation — ET-Gerät Anzeige</small></th>
-            <th colspan="2" class="green-h">Vor Abschwächung (J)<br><small style="font-weight:400">before attenuation — ET-Gerät Anzeige</small></th>
-            <th colspan="2" class="green-h">Abweichung * = |J+D−H|<br><small style="font-weight:400">Toleranz ≤ 2 dB</small></th>
-            <th colspan="2" class="green-h">Einstellung Abschwächer *<br><small style="font-weight:400">= Init + D</small></th>
-          </tr>
-          <tr><th>X [dB]</th><th>Y [dB]</th><th>X [dB]</th><th>Y [dB]</th><th>X</th><th>Y</th><th>X</th><th>Y</th></tr>
-        </thead><tbody id="amp-c2"></tbody></table></div>
-        <p style="font-size:11px;color:var(--gray-40);margin-top:8px">* Automatisch gerechnet / Automatically calculated</p>
-      </div>
-    </div>
-
-    <!-- ── PRÜFUNG 5: FREQUENZFILTER ─────────── -->
-    <div class="card" id="s5">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num">5</div>
-        <div class="card-title-wrap"><div class="card-title-de">Funktion der Frequenzfilter</div><div class="card-title-en">Function of Frequency Filters — Page 6 of 8</div></div>
-        <div class="tolerance-tag">Tol: ±0,2 Skt</div>
-        <div class="card-status pend" id="stat-s5">—</div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="infobox">** Nur anwendbar für Handgeräte, siehe S285065 – für automatisierte Prüfanlagen Punkt 6 anwenden.<br><em>** Only applicable for handset, see S285065 – for automated test systems use point 6.</em><br>EA = Erstabnahme · T = Turnusmäßige Prüfung · Δ = Abweichung in Skt.</div>
-        <div class="field-grid c3" style="margin-bottom:16px">
-          <div class="field"><label class="field-label">Prüffrequenz</label><input type="text" id="s5-freq" value="1 MHz"></div>
-          <div class="field"><label class="field-label">Tiefpass / Low pass</label><input type="text" id="s5-lp" value="1 KHz"></div>
-          <div class="field"><label class="field-label">Vorverstärkung</label><input type="text" id="s5-preamp" placeholder="dB"></div>
-        </div>
-        <div class="divider"><span>Kanal 1 / Channel 1 — Toleranz: ±0,2 Skt</span></div>
-        <div class="tbl-wrap"><table class="ptbl"><thead>
-          <tr>
-            <th class="green-h" rowspan="2">HP (Hz)</th>
-            <th colspan="3" class="green-h">n = 200 min⁻¹</th>
-            <th colspan="3" class="green-h" style="background:#006B30">n = 1000 min⁻¹</th>
-            <th colspan="3" class="green-h" style="background:#004D22">n = 2000 min⁻¹</th>
-          </tr>
-          <tr>
-            <th>EA (Skt)</th><th>T (Skt)</th><th>Δ*</th>
-            <th>EA (Skt)</th><th>T (Skt)</th><th>Δ*</th>
-            <th>EA (Skt)</th><th>T (Skt)</th><th>Δ*</th>
-          </tr>
-        </thead><tbody id="flt-c1"></tbody></table></div>
-        <div class="divider" style="margin-top:20px"><span>Kanal 2 / Channel 2 — Toleranz: ±0,2 Skt</span></div>
-        <div class="tbl-wrap"><table class="ptbl"><thead>
-          <tr>
-            <th class="green-h" rowspan="2">HP (Hz)</th>
-            <th colspan="3" class="green-h">n = 200 min⁻¹</th>
-            <th colspan="3" class="green-h" style="background:#006B30">n = 1000 min⁻¹</th>
-            <th colspan="3" class="green-h" style="background:#004D22">n = 2000 min⁻¹</th>
-          </tr>
-          <tr>
-            <th>EA (Skt)</th><th>T (Skt)</th><th>Δ*</th>
-            <th>EA (Skt)</th><th>T (Skt)</th><th>Δ*</th>
-            <th>EA (Skt)</th><th>T (Skt)</th><th>Δ*</th>
-          </tr>
-        </thead><tbody id="flt-c2"></tbody></table></div>
-        <p style="font-size:11px;color:var(--gray-40);margin-top:8px">* Automatisch gerechnet / Automatically calculated</p>
-      </div>
-    </div>
-
-    <!-- ── PRÜFUNG 6: PLAUSITEST ──────────────── -->
-    <div class="card" id="s6">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num">6</div>
-        <div class="card-title-wrap"><div class="card-title-de">Plausitest</div><div class="card-title-en">Plausibility Test — Page 7–8 of 8</div></div>
-        <div class="card-status pend" id="stat-s6">—</div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="infobox">** Nur anwendbar für automatisierte Prüfanlagen – für Handgeräte Punkt 5 anwenden.<br><em>** Only applicable for automated test systems – for handset use point 5.</em></div>
-        <div style="display:flex;gap:32px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
-          <div style="display:flex;gap:14px;align-items:center;background:var(--gray-05);border:1px solid var(--gray-10);border-radius:4px;padding:10px 16px">
-            <span style="font-size:18px;font-weight:700;font-family:'Source Code Pro',monospace;color:var(--schaeffler-green)">X</span><span style="font-size:12px;color:var(--gray-60)">=&nbsp;i.O / ok</span>
-            <span style="margin:0 8px;color:var(--gray-20)">|</span>
-            <span style="font-size:18px;font-weight:700;font-family:'Source Code Pro',monospace;color:var(--red)">O</span><span style="font-size:12px;color:var(--gray-60)">=&nbsp;n.i.O / not ok</span>
-          </div>
-          <div style="display:flex;gap:16px;align-items:flex-end">
-            <div class="field">
-              <label class="field-label">Anzahl i.O * <span>Count ok — Prüfergebnis</span></label>
-              <input type="text" id="s6-ok" readonly style="color:var(--schaeffler-green);font-family:'Source Code Pro',monospace;font-size:22px;font-weight:700;width:72px;text-align:center;background:var(--ok-l);border-color:rgba(0,137,61,0.3)">
-            </div>
-            <div class="field">
-              <label class="field-label">Anzahl n.i.O * <span>Count not-ok — Prüfergebnis</span></label>
-              <input type="text" id="s6-nok" readonly style="color:var(--red);font-family:'Source Code Pro',monospace;font-size:22px;font-weight:700;width:72px;text-align:center;background:var(--red-l);border-color:rgba(212,43,43,0.3)">
-            </div>
-            <div style="padding-bottom:6px;font-size:13px;font-weight:600" id="s6-hint" style="color:var(--gray-40)">—</div>
-          </div>
-          <p style="font-size:11px;color:var(--gray-40);align-self:flex-end;padding-bottom:6px">* Automatisch gerechnet aus Spalte „Prüfergebnis" · Bestehen: alle 30 ausgefüllt, genau 20× i.O. (X) + 10× n.i.O. (O)</p>
-        </div>
-        <div class="tbl-wrap">
-          <table class="ptbl" id="plaus-table">
-            <thead>
-              <tr>
-                <th class="green-h" style="width:52px;text-align:center">Teil-Nr.<br><small style="font-weight:400">Part-Nr.</small></th>
-                <th class="green-h" style="width:50%">Startreihenfolge<br><small style="font-weight:400">Starting order &nbsp;(X = i.O &nbsp;·&nbsp; O = n.i.O)</small></th>
-                <th class="green-h" style="width:50%">Prüfergebnis<br><small style="font-weight:400">Test result &nbsp;(X = i.O &nbsp;·&nbsp; O = n.i.O)</small></th>
-              </tr>
-            </thead>
-            <tbody id="plaus-body"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── UNTERSCHRIFTEN ─────────────────────── -->
-    <div class="card" id="s-sign">
-      <div class="card-header open" onclick="toggle(this)">
-        <div class="section-num neutral">✍</div>
-        <div class="card-title-wrap"><div class="card-title-de">Unterschriften & Freigabe</div><div class="card-title-en">Signatures & Release</div></div>
-        <div class="card-chevron open">▼</div>
-      </div>
-      <div class="card-body">
-        <div class="divider"><span>Prüfer / Inspector</span></div>
-        <div class="field-grid c2">
-          <div class="field"><label class="field-label">Prüfer (ET Level 2) <span>Inspector</span></label><input type="text" id="f-inspector"></div>
-          <div class="field"><label class="field-label">Ausstellungsdatum <span>Date of issue</span></label><input type="date" id="f-sign-date"></div>
-        </div>
-        <div class="divider"><span>Freigabe / Release</span></div>
-        <div class="field-grid c2">
-          <div class="field"><label class="field-label">Freigabe / Checked by</label><input type="text" id="f-checked"></div>
-          <div class="field"><label class="field-label">Firmenstempel / Company stamp</label><input type="text" id="f-stamp"></div>
-        </div>
-        <div class="field-grid c3">
-          <div class="field"><label class="field-label">Telefonnummer <span>Telephone no.</span></label><input type="tel" id="f-tel"></div>
-          <div class="field"><label class="field-label">Faxnummer <span>Fax no.</span></label><input type="tel" id="f-fax"></div>
-          <div class="field"><label class="field-label">E-Mail</label><input type="email" id="f-email"></div>
-        </div>
-        <div class="page-footer-strip" style="margin-top:20px">
-          <span><strong>Schaeffler Group</strong></span>
-          <span>Rohmann Elotest PL500</span>
-          <span>Version C 2021-06</span>
-          <span>Rev: 0</span>
-        </div>
-      </div>
-    </div>
-
-  </main>
-</div>
-
 <script>
-// ── DATA ─────────────────────────────────────────
-const freqData = [
-  {v:50,u:'Hz'},{v:100,u:'Hz'},{v:500,u:'Hz'},
-  {v:1,u:'kHz'},{v:5,u:'kHz'},{v:10,u:'kHz'},
-  {v:50,u:'kHz'},{v:100,u:'kHz'},{v:500,u:'kHz'},
-  {v:1,u:'MHz'},{v:5,u:'MHz'},{v:10,u:'MHz'}
-];
-const ampStages = [2,6,10,14,18];
-const hpFreqs   = [1.8,3.5,5,32,50,300];
+// ===== STATE =====
+let questions = null;
+let currentMethod = '';
+let selectedNTParticipants = [];
+let currentTrainingId = null;
+let currentExamParticipantIndex = 0;
+let currentExamPart = 'AT';
+let currentExamAnswers = {};
+let pendingResultsData = null;
 
-// ── FREQ TABLES ───────────────────────────────────
-function buildFreq(id, ch) {
-  const tb = document.getElementById(id);
-  freqData.forEach((r,i) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td class="mono" style="background:var(--gray-05);color:var(--black)">${r.v}</td>
-      <td style="color:var(--gray-60);width:60px">${r.u}</td>
-      <td><input type="number" step="any" id="frq-${ch}-o-${i}" placeholder="—" oninput="calcFreq('${ch}',${i},${r.v})"></td>
-      <td class="mono" id="frq-${ch}-d-${i}">—</td>
-      <td class="mono" id="frq-${ch}-s-${i}" style="width:80px">—</td>`;
-    tb.appendChild(tr);
-  });
-}
-function calcFreq(ch,i,ref) {
-  const osc = parseFloat(document.getElementById(`frq-${ch}-o-${i}`).value);
-  const dEl = document.getElementById(`frq-${ch}-d-${i}`);
-  const sEl = document.getElementById(`frq-${ch}-s-${i}`);
-  if (isNaN(osc)) { dEl.textContent='—'; dEl.className='mono'; sEl.textContent='—'; return; }
-  const dev = Math.abs(ref-osc)/ref;
-  const ok = dev <= 0.01;
-  dEl.textContent = (dev*100).toFixed(3)+' %';
-  dEl.className = 'mono '+(ok?'ok':'nok');
-  sEl.textContent = ok?'✓ ok':'✗ nok';
-  sEl.className = 'mono '+(ok?'ok':'nok');
-  updateStat('s3');
+const METHOD_NAMES = {
+  ET:'Wirbelstromprüfung', UT:'Ultraschallprüfung',
+  NE:'Ätzprüfung', MT:'Magnetpulverprüfung',
+  PT:'Eindringprüfung', BN:'Barkhausen Rauschen'
+};
+const PART_NAMES = {AT:'Allgemeiner Teil', ST:'Spezieller Teil', PR:'Praktischer Teil'};
+const PASS_THRESHOLD = 0.8;
+const RECERT_YEARS = 4;
+const NEW_Q_MIN_RATIO = 0.25;
+
+// ===== STORAGE =====
+const load = k => { try { return JSON.parse(localStorage.getItem(k)) || null; } catch { return null; } };
+const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+const getParticipants = () => load('zfp_participants') || [];
+const getTrainings = () => load('zfp_trainings') || [];
+const getHistory = () => load('zfp_history') || {};
+
+const saveParticipants = v => save('zfp_participants', v);
+const saveTrainings = v => save('zfp_trainings', v);
+const saveHistory = v => save('zfp_history', v);
+
+// ===== QUESTION LOADING =====
+async function loadQuestions() {
+  try {
+    const r = await fetch('questions.json');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    questions = await r.json();
+    document.getElementById('totalQCount').textContent = countQuestions();
+    document.getElementById('lastSync').textContent = new Date().toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
+    renderSettings();
+  } catch (e) {
+    showToast('Fragen konnten nicht geladen werden. Bitte einen lokalen Webserver verwenden (z.B. python -m http.server).', 'error', 6000);
+    document.getElementById('totalQCount').textContent = 'Fehler';
+  }
 }
 
-// ── AMP TABLES ────────────────────────────────────
-// Excel-Spaltenreihenfolge: D(Stufe fest) | H(Nach,X) | I(Nach,Y) | J(Vor,X) | K(Vor,Y) | L(Abw.X) | M(Abw.Y) | N(Einst.X) | O(Einst.Y)
-// Formeln:
-//   Abweichung X = ABS(J + D - H)   → |Vor_X + Stufe - Nach_X|
-//   Abweichung Y = ABS(K + D - I)   → |Vor_Y + Stufe - Nach_Y|
-//   Einstellung  = Initialwert + D  → Sollwert am Stufenabschwächer
-// Physik: Nach = Vor + D (ideal) → Abweichung = 0 → Toleranz ≤ 2 dB
-function buildAmp(id, ch) {
-  const tb = document.getElementById(id);
-  ampStages.forEach((st,i) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td class="mono" style="font-weight:700;width:60px;text-align:center">${st} dB</td>
-      <td><input type="number" step="any" id="amp-${ch}-hx-${i}" placeholder="—" oninput="calcAmpRow('${ch}',${i},${st})"></td>
-      <td><input type="number" step="any" id="amp-${ch}-hy-${i}" placeholder="—" oninput="calcAmpRow('${ch}',${i},${st})"></td>
-      <td><input type="number" step="any" id="amp-${ch}-jx-${i}" placeholder="—" oninput="calcAmpRow('${ch}',${i},${st})"></td>
-      <td><input type="number" step="any" id="amp-${ch}-jy-${i}" placeholder="—" oninput="calcAmpRow('${ch}',${i},${st})"></td>
-      <td class="mono" id="amp-${ch}-devx-${i}">—</td>
-      <td class="mono" id="amp-${ch}-devy-${i}">—</td>
-      <td class="mono" id="amp-${ch}-setx-${i}">—</td>
-      <td class="mono" id="amp-${ch}-sety-${i}">—</td>`;
-    tb.appendChild(tr);
-  });
-}
-function calcAmpRow(ch, i, stage) {
-  const H_x = parseFloat(document.getElementById(`amp-${ch}-hx-${i}`).value); // Nach Abschwächung X
-  const H_y = parseFloat(document.getElementById(`amp-${ch}-hy-${i}`).value); // Nach Abschwächung Y
-  const J_x = parseFloat(document.getElementById(`amp-${ch}-jx-${i}`).value); // Vor Abschwächung X
-  const J_y = parseFloat(document.getElementById(`amp-${ch}-jy-${i}`).value); // Vor Abschwächung Y
-  const init = parseFloat(document.getElementById(ch==='1' ? 's4-init1' : 's4-init2').value);
-  const devX = document.getElementById(`amp-${ch}-devx-${i}`);
-  const devY = document.getElementById(`amp-${ch}-devy-${i}`);
-  const setX = document.getElementById(`amp-${ch}-setx-${i}`);
-  const setY = document.getElementById(`amp-${ch}-sety-${i}`);
-  // Abweichung = |J + D - H| (Excel: ABS(J241+D241-H241))
-  if (!isNaN(H_x) && !isNaN(J_x)) {
-    const v = Math.abs(J_x + stage - H_x);
-    devX.textContent = v.toFixed(2);
-    devX.className = 'mono ' + (v <= 2 ? 'ok' : 'nok');
-  } else { devX.textContent = '—'; devX.className = 'mono'; }
-  if (!isNaN(H_y) && !isNaN(J_y)) {
-    const v = Math.abs(J_y + stage - H_y);
-    devY.textContent = v.toFixed(2);
-    devY.className = 'mono ' + (v <= 2 ? 'ok' : 'nok');
-  } else { devY.textContent = '—'; devY.className = 'mono'; }
-  // Einstellung = Initialwert + Stufe (Excel: $I$232 + D)
-  if (!isNaN(init)) {
-    setX.textContent = (init + stage).toFixed(1);
-    setY.textContent = (init + stage).toFixed(1);
-  } else { setX.textContent = '—'; setY.textContent = '—'; }
-  updateStat('s4');
-}
-function recalcAmp() { ampStages.forEach((st,i) => { calcAmpRow('1',i,st); calcAmpRow('2',i,st); }); }
-
-// ── FILTER TABLES ─────────────────────────────────
-// Excel: 3 Drehzahlgruppen (n=200, n=1000, n=2000), je HP-Frequenz: EA + T + Δ (=EA−T)
-// 6 HP-Frequenzen: 1.8, 3.5, 5, 32, 50, 300 Hz → pro Kanal 18 Eingabefelder
-function buildFlt(id, ch) {
-  const tb = document.getElementById(id);
-  hpFreqs.forEach((hp,i) => {
-    const tr = document.createElement('tr');
-    let cells = `<td class="mono" style="font-weight:700">${hp}</td>`;
-    for(let g=0;g<3;g++){
-      cells+=`<td><input type="number" step="any" id="flt-${ch}-${g}-ea-${i}" placeholder="—" style="width:60px" oninput="calcFlt('${ch}',${g},${i})"></td>`;
-      cells+=`<td><input type="number" step="any" id="flt-${ch}-${g}-t-${i}"  placeholder="—" style="width:60px" oninput="calcFlt('${ch}',${g},${i})"></td>`;
-      cells+=`<td class="mono" id="flt-${ch}-${g}-d-${i}">—</td>`;
+function countQuestions() {
+  if (!questions) return 0;
+  let c = (questions.shared?.AT?.length || 0);
+  if (questions.methods) {
+    for (const m of Object.values(questions.methods)) {
+      c += (m.ST?.length || 0) + (m.PR?.length || 0);
     }
-    tr.innerHTML=cells;
-    tb.appendChild(tr);
-  });
-}
-function calcFlt(ch,g,i){
-  // Excel: Δ = EA − T, Toleranz ±0,2 Skt
-  const ea=parseFloat(document.getElementById(`flt-${ch}-${g}-ea-${i}`)?.value);
-  const t =parseFloat(document.getElementById(`flt-${ch}-${g}-t-${i}`)?.value);
-  const d =document.getElementById(`flt-${ch}-${g}-d-${i}`);
-  if(!isNaN(ea)&&!isNaN(t)){const v=ea-t;d.textContent=v.toFixed(2);d.className='mono '+(Math.abs(v)<=0.2?'ok':'nok');}
-  else{d.textContent='—';d.className='mono';}
-  updateStat('s5');
+  }
+  return c;
 }
 
-// ── PLAUSIBILITY ──────────────────────────────────
-// Excel-Struktur: Spalte D = Startreihenfolge (X/O), Spalte G = Prüfergebnis (X/O)
-// Zählung läuft nur über Prüfergebnis — 20× i.O. (X) + 10× n.i.O. (O) wie Original
-// Verteilung: Teile 1–10 = abwechselnd X/O (Startreihenfolge gemischt),
-//             Prüfergebnis: 1–20=X, 21–30=O
-const SEL_STYLE = `width:100%;border:none;outline:none;font-family:'Source Code Pro',monospace;font-size:14px;font-weight:700;cursor:pointer;background:transparent;padding:2px 4px`;
-// Felder starten LEER — Prüfer trägt ein
-// Bestehens-Bedingung: alle 30 ausgefüllt, genau 20× X (i.O.) + genau 10× O (n.i.O.)
-const START_PRESET  = () => '';
-const RESULT_PRESET = () => '';
-function buildPlaus() {
-  const tbody = document.getElementById('plaus-body');
-  for(let n=1;n<=30;n++){
-    const sv=START_PRESET(n), rv=RESULT_PRESET(n);
-    const tr=document.createElement('tr');
-    tr.id=`pr-row-${n}`;
-    tr.innerHTML=`
-      <td style="font-family:'Source Code Pro',monospace;font-weight:700;text-align:center;width:52px;color:var(--gray-60)">${n}</td>
-      <td id="ps-c-${n}" style="padding:3px 6px">
-        <select id="ps-${n}" onchange="styleCell('ps-c-${n}','ps-${n}')" style="${SEL_STYLE}">
-          <option value="">—</option>
-          <option value="X"${sv==='X'?' selected':''}>X &nbsp; i.O</option>
-          <option value="O"${sv==='O'?' selected':''}>O &nbsp; n.i.O</option>
-        </select>
-      </td>
-      <td id="pr-c-${n}" style="padding:3px 6px">
-        <select id="pr-${n}" onchange="styleCell('pr-c-${n}','pr-${n}');calcPlaus()" style="${SEL_STYLE}">
-          <option value="">—</option>
-          <option value="X"${rv==='X'?' selected':''}>X &nbsp; i.O</option>
-          <option value="O"${rv==='O'?' selected':''}>O &nbsp; n.i.O</option>
-        </select>
-      </td>`;
-    tbody.appendChild(tr);
-    // Apply colors immediately
-    styleCell(`ps-c-${n}`,`ps-${n}`);
-    styleCell(`pr-c-${n}`,`pr-${n}`);
-  }
-  calcPlaus();
+function getQuestionsForMethod(method, part) {
+  if (!questions) return [];
+  if (part === 'AT') return questions.shared?.AT || [];
+  return questions.methods?.[method]?.[part === 'PR' ? 'PR' : 'ST'] || [];
 }
-function styleCell(tdId, selId){
-  const v=document.getElementById(selId).value;
-  const td=document.getElementById(tdId);
-  const sel=document.getElementById(selId);
-  if(v==='X'){td.style.background='var(--ok-l)';sel.style.color='var(--schaeffler-green)';}
-  else if(v==='O'){td.style.background='var(--red-l)';sel.style.color='var(--red)';}
-  else{td.style.background='';sel.style.color='';}
+
+// ===== NAVIGATION =====
+function nav(view, title) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const v = document.getElementById('view-' + view);
+  if (v) v.classList.add('active');
+  document.querySelector(`[data-view="${view}"]`)?.classList.add('active');
+  const titles = {
+    dashboard:'Dashboard', participants:'Teilnehmerverwaltung',
+    newTraining:'Neue Schulung', trainings:'Schulungen',
+    history:'Verlauf & Archiv', settings:'Einstellungen',
+    trainingDetail: title || 'Schulungsdetail', examMode: 'Prüfung'
+  };
+  document.getElementById('headerTitle').textContent = titles[view] || '';
+  if (view === 'dashboard') renderDashboard();
+  if (view === 'participants') renderParticipants();
+  if (view === 'trainings') renderTrainings();
+  if (view === 'history') renderHistory();
+  if (view === 'settings') renderSettings();
+  if (view === 'newTraining') initNewTraining();
 }
-function calcPlaus(){
-  // COUNTIF über Prüfergebnis-Spalte (Spalte G im Excel)
-  // Bestehen: alle 30 ausgefüllt, genau 20× X (i.O.) + genau 10× O (n.i.O.)
-  let ok=0, nok=0, empty=0;
-  for(let n=1;n<=30;n++){
-    const v=document.getElementById(`pr-${n}`).value;
-    if(v==='X') ok++;
-    else if(v==='O') nok++;
-    else empty++;
-  }
-  document.getElementById('s6-ok').value  = ok  || '';
-  document.getElementById('s6-nok').value = nok || '';
-  // Hinweis-Text: zeigt was noch fehlt
-  const hint = document.getElementById('s6-hint');
-  if(hint){
-    if(empty > 0){
-      hint.textContent = `${empty} Feld${empty>1?'er':''} noch offen`;
-      hint.style.color = 'var(--amber)';
-    } else if(ok === 20 && nok === 10){
-      hint.textContent = '✓ Vorgabe erfüllt: 20× i.O. + 10× n.i.O.';
-      hint.style.color = 'var(--schaeffler-green)';
+
+function setGlobalMethod(m) {
+  currentMethod = m;
+  const badge = document.getElementById('headerMethod');
+  if (m) { badge.textContent = m + ' · ' + (METHOD_NAMES[m] || ''); badge.style.display = ''; }
+  else badge.style.display = 'none';
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const trainings = getTrainings();
+  const participants = getParticipants();
+  const now = new Date();
+  const fourYearsAgo = new Date(now); fourYearsAgo.setFullYear(fourYearsAgo.getFullYear() - RECERT_YEARS);
+
+  // Stats
+  const completed = trainings.filter(t => t.status === 'completed');
+  const passCount = completed.reduce((a, t) => a + (t.participants?.filter(p => p.overallPassed).length || 0), 0);
+  const totalExaminees = completed.reduce((a, t) => a + (t.participants?.length || 0), 0);
+  const passRate = totalExaminees ? Math.round(passCount / totalExaminees * 100) : 0;
+
+  document.getElementById('dashStats').innerHTML = `
+    <div class="stat-card"><div class="val">${trainings.length}</div><div class="lbl">Schulungen gesamt</div></div>
+    <div class="stat-card"><div class="val">${participants.length}</div><div class="lbl">Teilnehmer</div></div>
+    <div class="stat-card"><div class="val">${totalExaminees}</div><div class="lbl">Prüfungsabnahmen</div></div>
+    <div class="stat-card"><div class="val" style="color:${passRate>=80?'var(--green)':'var(--red)'}">${passRate}%</div><div class="lbl">Bestehensquote</div></div>
+  `;
+
+  // Recent trainings
+  const recent = [...trainings].sort((a,b) => new Date(b.date)-new Date(a.date)).slice(0,5);
+  document.getElementById('dashTrainings').innerHTML = recent.length ? `
+    <div class="table-wrap"><table>
+      <thead><tr><th>Datum</th><th>Methode</th><th>Bezeichnung</th><th>Teiln.</th><th>Status</th><th></th></tr></thead>
+      <tbody>${recent.map(t => `
+        <tr>
+          <td class="td-mono">${fmtDate(t.date)}</td>
+          <td><span class="badge badge-blue">${t.method}</span></td>
+          <td>${t.name || '—'}</td>
+          <td>${t.participants?.length || 0}</td>
+          <td>${t.status === 'completed' ? '<span class="badge badge-green">Abgeschlossen</span>' : '<span class="badge badge-amber">Offen</span>'}</td>
+          <td><button class="btn btn-secondary btn-sm" onclick="openTrainingDetail('${t.id}')">Details</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>
+  ` : '<div class="empty-state"><div class="empty-icon">📋</div><p>Noch keine Schulungen angelegt</p><button class="btn btn-primary" onclick="nav(\'newTraining\')">Erste Schulung anlegen</button></div>';
+
+  // Method pass rates
+  const methodStats = {};
+  completed.forEach(t => {
+    if (!methodStats[t.method]) methodStats[t.method] = {pass:0,total:0};
+    (t.participants||[]).forEach(p => {
+      methodStats[t.method].total++;
+      if (p.overallPassed) methodStats[t.method].pass++;
+    });
+  });
+  document.getElementById('dashStats2').innerHTML = Object.entries(methodStats).map(([m,s]) => {
+    const r = s.total ? Math.round(s.pass/s.total*100) : 0;
+    return `<div class="mb8">
+      <div class="flex justify-between mb4"><span class="text-sm font-semi">${m}</span><span class="text-sm text-mono" style="color:${r>=80?'var(--green)':'var(--red)'}">${r}%</span></div>
+      <div class="progress"><div class="progress-bar ${r>=80?'green':'red'}" style="width:${r}%"></div></div>
+    </div>`;
+  }).join('') || '<div class="text-sm text-muted">Noch keine Daten</div>';
+
+  // Recertification due
+  const history = getHistory();
+  const recertDue = [];
+  participants.forEach(p => {
+    Object.keys(METHOD_NAMES).forEach(m => {
+      const hkey = `${p.id}:::${m}`;
+      const hlist = history[hkey] || [];
+      const last = hlist.filter(h => h.passed).sort((a,b) => new Date(b.date)-new Date(a.date))[0];
+      if (last) {
+        const due = new Date(last.date); due.setFullYear(due.getFullYear() + RECERT_YEARS);
+        const daysLeft = Math.ceil((due - now) / 86400000);
+        if (daysLeft <= 180) recertDue.push({p, m, due, daysLeft, last});
+      }
+    });
+  });
+  recertDue.sort((a,b) => a.daysLeft - b.daysLeft);
+  document.getElementById('dashRecert').innerHTML = recertDue.slice(0,5).map(r => `
+    <div class="flex justify-between items-center mb8">
+      <div>
+        <div class="text-sm font-semi">${r.p.name}</div>
+        <div class="text-xs text-dim">${r.m} · fällig ${fmtDate(r.due.toISOString().split('T')[0])}</div>
+      </div>
+      <span class="badge ${r.daysLeft < 60 ? 'badge-red' : r.daysLeft < 120 ? 'badge-amber' : 'badge-gray'}">${r.daysLeft}d</span>
+    </div>
+  `).join('') || '<div class="text-sm text-muted">Keine Rezertifizierungen in 6 Monaten fällig</div>';
+}
+
+// ===== PARTICIPANTS =====
+function renderParticipants(search = '') {
+  const ps = getParticipants().filter(p =>
+    !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.employeeId?.includes(search)
+  );
+  const history = getHistory();
+  const now = new Date();
+  document.getElementById('participantsTable').innerHTML = ps.length ? ps.map(p => {
+    const lastExam = getLastExamInfo(p.id, history);
+    const recertDue = lastExam ? (() => { const d = new Date(lastExam.date); d.setFullYear(d.getFullYear()+RECERT_YEARS); return d; })() : null;
+    const daysLeft = recertDue ? Math.ceil((recertDue - now) / 86400000) : null;
+    return `<tr>
+      <td><strong>${p.name}</strong></td>
+      <td class="td-mono">${p.employeeId || '—'}</td>
+      <td class="text-muted">${p.department || '—'}</td>
+      <td class="td-mono">${lastExam ? fmtDate(lastExam.date) + ' · ' + lastExam.method : '—'}</td>
+      <td>${recertDue ? `<span class="badge ${daysLeft<60?'badge-red':daysLeft<180?'badge-amber':'badge-green'}">${fmtDate(recertDue.toISOString().split('T')[0])}</span>` : '—'}</td>
+      <td><div class="btn-group">
+        <button class="btn btn-secondary btn-sm" onclick="viewParticipantHistory('${p.id}')">Verlauf</button>
+        <button class="btn btn-icon btn-secondary btn-sm" onclick="deleteParticipant('${p.id}')" title="Löschen">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="6" class="text-muted" style="text-align:center;padding:32px">Keine Teilnehmer gefunden</td></tr>';
+}
+
+function getLastExamInfo(participantId, history) {
+  let last = null;
+  Object.keys(history).forEach(key => {
+    if (!key.startsWith(participantId + ':::')) return;
+    const method = key.split(':::')[1];
+    (history[key] || []).forEach(h => {
+      if (!last || new Date(h.date) > new Date(last.date)) last = { ...h, method };
+    });
+  });
+  return last;
+}
+
+function openAddParticipant() { openModal('modal-addParticipant'); }
+
+function saveParticipant() {
+  const name = document.getElementById('ap-name').value.trim();
+  const empId = document.getElementById('ap-empid').value.trim();
+  const dept = document.getElementById('ap-dept').value.trim();
+  if (!name || !empId) { showToast('Name und Personal-Nr. erforderlich', 'error'); return; }
+  const ps = getParticipants();
+  if (ps.find(p => p.employeeId === empId)) { showToast('Personal-Nr. bereits vorhanden', 'error'); return; }
+  ps.push({ id: uid(), name, employeeId: empId, department: dept, createdAt: now_iso() });
+  saveParticipants(ps);
+  closeModal('modal-addParticipant');
+  renderParticipants();
+  showToast(`${name} hinzugefügt`, 'success');
+  ['ap-name','ap-empid','ap-dept'].forEach(id => document.getElementById(id).value = '');
+}
+
+function deleteParticipant(id) {
+  if (!confirm('Teilnehmer wirklich löschen? Die Prüfungshistorie bleibt erhalten.')) return;
+  saveParticipants(getParticipants().filter(p => p.id !== id));
+  renderParticipants();
+  showToast('Teilnehmer gelöscht', 'success');
+}
+
+function viewParticipantHistory(id) {
+  const p = getParticipants().find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('history-search-name').value = p.name;
+  nav('history');
+  renderHistory();
+}
+
+// ===== NEW TRAINING =====
+function initNewTraining() {
+  selectedNTParticipants = [];
+  document.getElementById('nt-date').value = new Date().toISOString().split('T')[0];
+  renderNTSearch('');
+  renderNTSelected();
+}
+
+function updateNTMethod() {
+  const m = document.getElementById('nt-method').value;
+  if (m) setGlobalMethod(m);
+}
+
+function renderNTSearch(search) {
+  const ps = getParticipants().filter(p =>
+    (!search || p.name.toLowerCase().includes(search.toLowerCase()) || p.employeeId?.includes(search)) &&
+    !selectedNTParticipants.find(s => s.id === p.id)
+  );
+  document.getElementById('nt-search-results').innerHTML = ps.slice(0, 20).map(p => `
+    <div class="participant-item" style="cursor:pointer;margin-bottom:4px" onclick="addNTParticipant('${p.id}')">
+      <div class="p-name">${p.name}</div>
+      <div class="p-id">${p.employeeId || '—'}</div>
+      <button class="btn btn-secondary btn-sm">+</button>
+    </div>
+  `).join('') || '<div class="text-sm text-muted" style="padding:8px">Keine Ergebnisse</div>';
+}
+
+function addNTParticipant(id) {
+  const p = getParticipants().find(x => x.id === id);
+  if (!p || selectedNTParticipants.find(x => x.id === id)) return;
+  selectedNTParticipants.push(p);
+  renderNTSelected();
+  renderNTSearch(document.getElementById('nt-search').value);
+}
+
+function removeNTParticipant(id) {
+  selectedNTParticipants = selectedNTParticipants.filter(p => p.id !== id);
+  renderNTSelected();
+  renderNTSearch(document.getElementById('nt-search').value);
+}
+
+function addAllParticipants() {
+  getParticipants().forEach(p => { if (!selectedNTParticipants.find(x => x.id === p.id)) selectedNTParticipants.push(p); });
+  renderNTSelected();
+  renderNTSearch(document.getElementById('nt-search').value);
+}
+
+function renderNTSelected() {
+  document.getElementById('nt-selected-count').textContent = selectedNTParticipants.length;
+  document.getElementById('nt-selected-list').innerHTML = selectedNTParticipants.map(p => `
+    <div class="participant-item" style="margin-bottom:4px">
+      <div class="p-name">${p.name}</div>
+      <div class="p-id">${p.employeeId || '—'}</div>
+      <button class="btn btn-danger btn-sm btn-icon" onclick="removeNTParticipant('${p.id}')">✕</button>
+    </div>
+  `).join('') || '<div class="text-sm text-muted" style="padding:8px">Noch keine Teilnehmer ausgewählt</div>';
+}
+
+function addNewParticipantFromNT() {
+  const name = document.getElementById('nt-np-name').value.trim();
+  const empId = document.getElementById('nt-np-id').value.trim();
+  const dept = document.getElementById('nt-np-dept').value.trim();
+  if (!name || !empId) { showToast('Name und Personal-Nr. erforderlich', 'error'); return; }
+  const ps = getParticipants();
+  if (ps.find(p => p.employeeId === empId)) { showToast('Personal-Nr. bereits vorhanden', 'error'); return; }
+  const p = { id: uid(), name, employeeId: empId, department: dept, createdAt: now_iso() };
+  ps.push(p);
+  saveParticipants(ps);
+  selectedNTParticipants.push(p);
+  renderNTSelected();
+  ['nt-np-name','nt-np-id','nt-np-dept'].forEach(id => document.getElementById(id).value = '');
+  showToast(`${name} angelegt und hinzugefügt`, 'success');
+}
+
+function resetNewTraining() {
+  ['nt-method','nt-location','nt-trainer','nt-name'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('nt-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('nt-count-at').value = 20;
+  document.getElementById('nt-count-st').value = 15;
+  document.getElementById('nt-count-pr').value = 8;
+  selectedNTParticipants = [];
+  renderNTSelected();
+  renderNTSearch('');
+}
+
+// ===== QUESTION SELECTION (25% NEW GUARANTEE) =====
+function selectQuestionsForParticipant(participantId, method, config) {
+  const history = getHistory();
+  const hkey = `${participantId}:::${method}`;
+  const hlist = history[hkey] || [];
+  const fourYearsAgo = new Date(); fourYearsAgo.setFullYear(fourYearsAgo.getFullYear() - RECERT_YEARS);
+  
+  // Collect all question IDs used in last 4 years
+  const usedIds = new Set();
+  hlist.filter(h => new Date(h.date) >= fourYearsAgo).forEach(h => {
+    (h.questionIds || []).forEach(id => usedIds.add(id));
+  });
+
+  const result = {};
+  const newCounts = {};
+
+  for (const part of ['AT', 'ST', 'PR']) {
+    const pool = getQuestionsForMethod(method, part);
+    const needed = config[part] || 10;
+    const minNew = Math.ceil(needed * NEW_Q_MIN_RATIO);
+
+    const newQs = shuffle(pool.filter(q => !usedIds.has(q.id)));
+    const oldQs = shuffle(pool.filter(q => usedIds.has(q.id)));
+
+    let selected = [];
+
+    if (newQs.length >= minNew) {
+      // Take at least minNew from new
+      selected = [...newQs.slice(0, minNew)];
+      // Fill rest from remaining pool (prefer more new if available)
+      const remaining = needed - selected.length;
+      const fillPool = shuffle([...newQs.slice(minNew), ...oldQs]);
+      selected = shuffle([...selected, ...fillPool.slice(0, remaining)]);
     } else {
-      hint.textContent = `Vorgabe: 20× i.O. (aktuell ${ok}) + 10× n.i.O. (aktuell ${nok})`;
-      hint.style.color = 'var(--red)';
+      // Not enough new questions — take all new, fill with old
+      selected = shuffle([...newQs, ...oldQs].slice(0, needed));
     }
-  }
-  updateStat('s6');
-}
 
-// ── SECTION STATUS ────────────────────────────────
-function getRad(n){const e=document.querySelector(`input[name="${n}"]:checked`);return e?e.value:null;}
-function updateStat(sid){
-  let st='pend';
-  if(sid==='s1'){const v=['s1-1','s1-2','s1-3','s1-4'].map(getRad);if(v.every(x=>x))st=v.includes('nok')?'nok':'ok';}
-  else if(sid==='s2'){const v=Array.from({length:10},(_,i)=>`s2-${i+1}`).map(getRad);if(v.every(x=>x))st=v.includes('nok')?'nok':'ok';}
-  else if(sid==='s3'){const cells=document.querySelectorAll('[id^="frq-"][id*="-d-"]');const nok=Array.from(cells).some(c=>c.classList.contains('nok'));const ok=Array.from(cells).some(c=>c.classList.contains('ok'));st=nok?'nok':ok?'ok':'pend';}
-  else if(sid==='s4'){const cells=document.querySelectorAll('[id^="amp-"][id*="-dev"]');const nok=Array.from(cells).some(c=>c.classList.contains('nok'));const ok=Array.from(cells).some(c=>c.classList.contains('ok'));st=nok?'nok':ok?'ok':'pend';}
-  else if(sid==='s5'){const cells=document.querySelectorAll('[id^="flt-"][id*="-d-"],[id^="flt-"][id*="-dh-"]');const nok=Array.from(cells).some(c=>c.classList.contains('nok'));const ok=Array.from(cells).some(c=>c.classList.contains('ok'));st=nok?'nok':ok?'ok':'pend';}
-  else if(sid==='s6'){
-    const ok=parseInt(document.getElementById('s6-ok').value)||0;
-    const nok=parseInt(document.getElementById('s6-nok').value)||0;
-    const total=ok+nok;
-    // Bestehen: alle 30 eingetragen, genau 20× i.O. + genau 10× n.i.O.
-    if(total===0) st='pend';
-    else if(total===30 && ok===20 && nok===10) st='ok';
-    else st='nok';
+    result[part] = selected.map(q => q.id);
+    newCounts[part] = selected.filter(q => !usedIds.has(q.id)).length;
   }
 
-  const el=document.getElementById(`stat-${sid}`);
-  const su=document.getElementById(`sum-${sid}`);
-  const nav=document.getElementById(`nav-${sid}`);
-  if(!el) return;
-  el.className='card-status '+(st==='ok'?'ok':st==='nok'?'nok':'pend');
-  el.textContent=st==='ok'?'✓ ok':st==='nok'?'✗ nok':'—';
-  if(su){su.textContent=st==='ok'?'✓ ok':st==='nok'?'✗ nok':'—';su.className='s-value '+(st==='ok'?'ok':st==='nok'?'nok':'');}
-  if(nav){nav.textContent=st==='ok'?'ok':st==='nok'?'nok':'—';nav.className='nav-badge '+(st==='ok'?'ok':st==='nok'?'nok':'');}
-  updateTotal();
+  return { questions: result, newCounts, usedCount: usedIds.size };
 }
-function updateTotal(){
-  const sids=['s1','s2','s3','s4','s5','s6'];
-  const sts=sids.map(s=>{const e=document.getElementById(`stat-${s}`);if(!e)return 'pend';return e.classList.contains('ok')?'ok':e.classList.contains('nok')?'nok':'pend';});
-  const el=document.getElementById('sum-total');
-  const allOk=sts.every(s=>s==='ok'),hasNok=sts.includes('nok');
-  el.textContent=allOk?'✓ PASS':hasNok?'✗ FAIL':'—';
-  el.className='s-value '+(allOk?'ok':hasNok?'nok':'');
-}
-function updateSummary(){document.getElementById('sum-nr').textContent=document.getElementById('f-nr').value||'—';}
 
-// ── TOGGLE ────────────────────────────────────────
-function toggle(h){const b=h.nextElementSibling,c=h.querySelector('.card-chevron');b.classList.toggle('hidden');c.classList.toggle('open');h.classList.toggle('open');}
-function toggleSidebar(){
-  const nav=document.querySelector('nav.sidebar');
-  const btn=document.getElementById('mob-menu-btn');
-  const ov=document.getElementById('mob-overlay');
-  nav.classList.toggle('open');
-  btn.classList.toggle('open');
-  ov.classList.toggle('show');
-}
-function closeSidebar(){
-  document.querySelector('nav.sidebar').classList.remove('open');
-  document.getElementById('mob-menu-btn').classList.remove('open');
-  document.getElementById('mob-overlay').classList.remove('show');
-}
-function navTo(id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  closeSidebar();
-  const headerH=document.querySelector('header')?.offsetHeight||68;
-  const top=el.getBoundingClientRect().top+window.scrollY-headerH-12;
-  window.scrollTo({top,behavior:'smooth'});
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-}
-function selEnv(c){document.querySelectorAll('.env-card').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');c.querySelector('input').checked=true;}
+// ===== GENERATE TRAINING =====
+function generateTraining() {
+  if (!questions) { showToast('Fragen noch nicht geladen!', 'error'); return; }
+  const method = document.getElementById('nt-method').value;
+  const date = document.getElementById('nt-date').value;
+  const location = document.getElementById('nt-location').value.trim();
+  const trainer = document.getElementById('nt-trainer').value.trim();
+  const name = document.getElementById('nt-name').value.trim();
 
-// ── PHOTO ─────────────────────────────────────────
-function loadPhoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{document.getElementById('photo-prev').src=ev.target.result;document.getElementById('photo-prev').style.display='block';document.getElementById('photo-ph').style.display='none';document.getElementById('photo-zone').classList.add('filled');};r.readAsDataURL(f);}
-function dropPhoto(e){e.preventDefault();loadPhoto({target:{files:e.dataTransfer.files}});}
-function clearPhoto(){document.getElementById('photo-prev').style.display='none';document.getElementById('photo-ph').style.display='block';document.getElementById('photo-zone').classList.remove('filled');}
+  if (!method) { showToast('Bitte Prüfmethode wählen', 'error'); return; }
+  if (!date) { showToast('Bitte Datum angeben', 'error'); return; }
+  if (selectedNTParticipants.length === 0) { showToast('Bitte mindestens einen Teilnehmer hinzufügen', 'error'); return; }
 
-// ── RESET / EXPORT ───────────────────────────────
-function collect(){const d={};document.querySelectorAll('input:not([type=radio]):not([type=file]),textarea,select').forEach(e=>{if(e.id)d[e.id]=e.value;});document.querySelectorAll('input[type=radio]:checked').forEach(e=>{d['r_'+e.name]=e.value;});return d;}
-function resetForm(){if(!confirm('Alle Eingaben zurücksetzen?'))return;document.querySelectorAll('input:not([type=radio]):not([type=file]),textarea').forEach(e=>{if(!e.readOnly)e.value='';});document.querySelectorAll('input[type=radio]').forEach(e=>e.checked=false);document.querySelectorAll('select').forEach(e=>e.selectedIndex=0);document.querySelectorAll('.mono').forEach(c=>{c.textContent='—';c.className='mono';});clearPhoto();for(let n=1;n<=30;n++){styleCell(`ps-c-${n}`,`ps-${n}`);styleCell(`pr-c-${n}`,`pr-${n}`);}['s1','s2','s3','s4','s5','s6'].forEach(s=>updateStat(s));updateSummary();toast('Formular zurückgesetzt');}
-function exportJSON(){const blob=new Blob([JSON.stringify(collect(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`Schaeffler_PL500_Pruefprotokoll_${new Date().toISOString().slice(0,10)}.json`;a.click();}
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2400);}
+  const countAT = parseInt(document.getElementById('nt-count-at').value) || 20;
+  const countST = parseInt(document.getElementById('nt-count-st').value) || 15;
+  const countPR = parseInt(document.getElementById('nt-count-pr').value) || 8;
 
-// ── PRINT PREP ────────────────────────────────────
-window.addEventListener('beforeprint', () => {
-  const nr = document.getElementById('f-nr').value || '—';
-  document.getElementById('print-nr-display').textContent = 'Nr.: ' + nr;
-  document.getElementById('print-header').style.display = 'flex';
+  // Validate pool sizes
+  const atPool = getQuestionsForMethod(method, 'AT');
+  const stPool = getQuestionsForMethod(method, 'ST');
+  const prPool = getQuestionsForMethod(method, 'PR');
+  if (atPool.length < countAT) { showToast(`Nicht genug AT-Fragen: ${atPool.length} verfügbar, ${countAT} benötigt`, 'error'); return; }
+  if (stPool.length < countST) { showToast(`Nicht genug ST-Fragen: ${stPool.length} verfügbar, ${countST} benötigt`, 'error'); return; }
+  if (prPool.length < countPR) { showToast(`Nicht genug PR-Fragen: ${prPool.length} verfügbar, ${countPR} benötigt`, 'error'); return; }
+
+  const trainingId = uid();
+  const config = { AT: countAT, ST: countST, PR: countPR };
+
+  const participants = selectedNTParticipants.map(p => {
+    const sel = selectQuestionsForParticipant(p.id, method, config);
+    return {
+      participantId: p.id,
+      name: p.name,
+      employeeId: p.employeeId,
+      department: p.department,
+      questions: sel.questions,
+      newCounts: sel.newCounts,
+      answers: {},
+      scores: null,
+      overallPassed: null,
+      completedAt: null
+    };
+  });
+
+  const training = {
+    id: trainingId, method, date, location, trainer,
+    name: name || `${method} · ${fmtDate(date)}`,
+    config, status: 'prepared', createdAt: now_iso(), participants
+  };
+
+  const trainings = getTrainings();
+  trainings.push(training);
+  saveTrainings(trainings);
+
+  showToast(`Schulung "${training.name}" mit ${participants.length} Teilnehmern generiert!`, 'success');
+  resetNewTraining();
+  openTrainingDetail(trainingId);
+}
+
+// ===== TRAINING DETAIL =====
+function openTrainingDetail(id) {
+  currentTrainingId = id;
+  nav('trainingDetail', 'Schulungsdetail');
+  renderTrainingDetail(id);
+}
+
+function renderTrainingDetail(id) {
+  const training = getTrainings().find(t => t.id === id);
+  if (!training) return;
+
+  const allDone = training.participants.every(p => p.completedAt);
+  const passCount = training.participants.filter(p => p.overallPassed).length;
+
+  document.getElementById('training-detail-content').innerHTML = `
+    <div class="flex justify-between items-center mb24">
+      <div>
+        <div class="page-title">${training.name}</div>
+        <div class="page-sub">
+          <span class="badge badge-blue">${training.method}</span>
+          &nbsp;${fmtDate(training.date)}
+          ${training.location ? ' · ' + training.location : ''}
+          ${training.trainer ? ' · Prüfer: ' + training.trainer : ''}
+        </div>
+      </div>
+      <div class="btn-group no-print">
+        ${training.status === 'prepared' ? `
+          <button class="btn btn-primary" onclick="startDigitalExam('${id}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Digitale Prüfung starten
+          </button>
+          <button class="btn btn-secondary" onclick="printExam('${id}')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Druckversion
+          </button>
+        ` : ''}
+        ${allDone ? `<button class="btn btn-secondary" onclick="exportTrainingResults('${id}')">Ergebnisse exportieren</button>` : ''}
+      </div>
+    </div>
+
+    ${training.status === 'completed' ? `
+      <div class="stats-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+        <div class="stat-card"><div class="val">${training.participants.length}</div><div class="lbl">Teilnehmer</div></div>
+        <div class="stat-card"><div class="val text-green">${passCount}</div><div class="lbl">Bestanden</div></div>
+        <div class="stat-card"><div class="val text-red">${training.participants.length - passCount}</div><div class="lbl">Nicht bestanden</div></div>
+        <div class="stat-card"><div class="val" style="color:${passCount/training.participants.length>=0.8?'var(--green)':'var(--red)'}">${Math.round(passCount/training.participants.length*100)}%</div><div class="lbl">Bestehensquote</div></div>
+      </div>
+    ` : ''}
+
+    <div class="card">
+      <div class="card-title">Teilnehmer & Prüfungsstatus</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Name</th><th>Personal-Nr.</th><th>AT Neu</th><th>ST Neu</th><th>PR Neu</th>
+            ${training.status !== 'prepared' || true ? '<th>AT</th><th>ST</th><th>PR</th><th>Gesamt</th>' : ''}
+            <th>Aktionen</th>
+          </tr></thead>
+          <tbody>${training.participants.map((p, idx) => {
+            const nc = p.newCounts || {};
+            const s = p.scores;
+            return `<tr>
+              <td><strong>${p.name}</strong></td>
+              <td class="td-mono">${p.employeeId || '—'}</td>
+              <td class="td-mono"><span class="badge badge-blue">${nc.AT || 0}/${training.config.AT}</span></td>
+              <td class="td-mono"><span class="badge badge-blue">${nc.ST || 0}/${training.config.ST}</span></td>
+              <td class="td-mono"><span class="badge badge-blue">${nc.PR || 0}/${training.config.PR}</span></td>
+              ${s ? `
+                <td>${scoreCell(s.AT)}</td>
+                <td>${scoreCell(s.ST)}</td>
+                <td>${scoreCell(s.PR)}</td>
+                <td>${p.overallPassed ? '<span class="badge badge-green">✓ Bestanden</span>' : '<span class="badge badge-red">✗ Nicht bestanden</span>'}</td>
+              ` : '<td colspan="4" class="text-muted text-sm">Noch nicht abgenommen</td>'}
+              <td><div class="btn-group">
+                <button class="btn btn-secondary btn-sm" onclick="openResultsModal('${id}',${idx})">
+                  ${p.completedAt ? 'Ergebnis' : 'Ergebnis eintragen'}
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="showExamSheet('${id}',${idx})">Fragebogen</button>
+              </div></td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function scoreCell(s) {
+  if (!s) return '<span class="text-muted">—</span>';
+  const pct = Math.round(s.correct / s.total * 100);
+  const pass = pct >= 80;
+  return `<span class="badge ${pass ? 'badge-green' : 'badge-red'}">${s.correct}/${s.total} (${pct}%)</span>`;
+}
+
+// ===== SHOW EXAM SHEET (for one participant) =====
+function showExamSheet(trainingId, pIdx) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  if (!training) return;
+  const p = training.participants[pIdx];
+  const allQ = getAllQuestionsMap();
+
+  let html = `
+    <div class="print-only" style="margin-bottom:20px">
+      <h2>ZfP Prüfungsbogen – ${training.method} · ${METHOD_NAMES[training.method]}</h2>
+      <p>Teilnehmer: <strong>${p.name}</strong> (${p.employeeId || '—'}) | Datum: ${fmtDate(training.date)} | Ort: ${training.location || '—'}</p>
+      <p>Bestehensgrenze: 80% je Teil</p><hr>
+    </div>
+  `;
+
+  for (const [partKey, partLabel] of Object.entries(PART_NAMES)) {
+    const qIds = p.questions[partKey] || [];
+    html += `<div class="card"><div class="card-title" style="font-size:15px;margin-bottom:20px">${partLabel} (${qIds.length} Fragen)</div>`;
+    qIds.forEach((qId, qi) => {
+      const q = allQ[qId];
+      if (!q) return;
+      const ans = p.answers?.[partKey]?.[qId];
+      html += `<div class="question-block">
+        <div class="q-header">
+          <span class="q-num">${partKey}-${qi+1}</span>
+          <div class="q-text">${q.text}</div>
+        </div>
+        <div class="q-options">
+          ${Object.entries(q.options).map(([k, v]) => {
+            let cls = '';
+            if (ans) { if (k === q.answer) cls = 'correct'; else if (k === ans) cls = 'wrong'; }
+            return `<div class="q-option ${cls}">
+              <span class="q-option-label">${k})</span>
+              <span class="q-option-text">${v}</span>
+            </div>`;
+          }).join('')}
+        </div>
+        ${ans ? `<div class="mt8 text-sm" style="color:${ans===q.answer?'var(--green)':'var(--red)'}">${ans===q.answer?'✓ Richtig':'✗ Falsch (Richtig: '+q.answer+')'}</div>` : ''}
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('training-detail-content').innerHTML = `
+    <div class="flex gap8 mb24 no-print">
+      <button class="btn btn-secondary" onclick="renderTrainingDetail('${trainingId}')">← Zurück</button>
+      <button class="btn btn-secondary" onclick="window.print()">Drucken</button>
+    </div>
+    <div class="print-only"><h3 style="margin-bottom:16px">ZfP Prüfungsbogen</h3></div>
+    ${html}
+  `;
+}
+
+// ===== RESULTS MODAL =====
+function openResultsModal(trainingId, pIdx) {
+  pendingResultsData = { trainingId, pIdx };
+  const training = getTrainings().find(t => t.id === trainingId);
+  const p = training.participants[pIdx];
+  const allQ = getAllQuestionsMap();
+  document.getElementById('results-modal-sub').textContent = `Teilnehmer: ${p.name} · ${training.method}`;
+
+  let html = '';
+  for (const [partKey, partLabel] of Object.entries(PART_NAMES)) {
+    const qIds = p.questions[partKey] || [];
+    html += `<div class="mb16">
+      <div style="font-size:13px;font-weight:600;margin-bottom:10px;color:var(--text2)">${partLabel} (${qIds.length} Fragen)</div>
+      <div class="answer-grid">
+        ${qIds.map((qId, qi) => {
+          const q = allQ[qId];
+          const existing = p.answers?.[partKey]?.[qId] || '';
+          return `<div class="answer-cell">
+            <div class="q-label">${partKey}-${qi+1}</div>
+            <input class="answer-input" data-part="${partKey}" data-qid="${qId}" data-correct="${q?.answer||''}"
+              maxlength="1" value="${existing}" oninput="validateAnswerInput(this)" placeholder="?">
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+  document.getElementById('results-modal-content').innerHTML = html;
+  openModal('modal-results');
+}
+
+function validateAnswerInput(el) {
+  el.value = el.value.toLowerCase().replace(/[^abcd]/g,'');
+  const correct = el.dataset.correct;
+  if (el.value && correct) {
+    el.classList.toggle('correct', el.value === correct);
+    el.classList.toggle('incorrect', el.value !== correct);
+  } else { el.classList.remove('correct','incorrect'); }
+}
+
+function saveResults() {
+  const { trainingId, pIdx } = pendingResultsData;
+  const trainings = getTrainings();
+  const training = trainings.find(t => t.id === trainingId);
+  const p = training.participants[pIdx];
+  const allQ = getAllQuestionsMap();
+
+  const inputs = document.querySelectorAll('#results-modal-content .answer-input');
+  const answers = {};
+  const scores = {};
+
+  for (const [partKey] of Object.entries(PART_NAMES)) {
+    answers[partKey] = {};
+    let correct = 0, total = 0;
+    inputs.forEach(inp => {
+      if (inp.dataset.part !== partKey) return;
+      const qId = inp.dataset.qid;
+      const val = inp.value.trim().toLowerCase();
+      if (val) answers[partKey][qId] = val;
+      const q = allQ[qId];
+      if (q && val) { total++; if (val === q.answer) correct++; }
+    });
+    scores[partKey] = { correct, total, percent: total ? Math.round(correct/total*100) : 0, passed: total > 0 && correct/total >= PASS_THRESHOLD };
+  }
+
+  p.answers = answers;
+  p.scores = scores;
+  p.overallPassed = Object.values(scores).every(s => s.passed);
+  p.completedAt = now_iso();
+
+  // Update training status
+  if (training.participants.every(x => x.completedAt)) training.status = 'completed';
+  saveTrainings(trainings);
+
+  // Update history
+  const history = getHistory();
+  const hkey = `${p.participantId}:::${training.method}`;
+  if (!history[hkey]) history[hkey] = [];
+  const allQIds = [...(p.questions.AT||[]), ...(p.questions.ST||[]), ...(p.questions.PR||[])];
+  history[hkey].push({ trainingId, date: training.date, questionIds: allQIds, scores, passed: p.overallPassed });
+  saveHistory(history);
+
+  closeModal('modal-results');
+  showToast(`Ergebnisse für ${p.name} gespeichert: ${p.overallPassed ? '✓ Bestanden' : '✗ Nicht bestanden'}`, p.overallPassed ? 'success' : 'error');
+  renderTrainingDetail(trainingId);
+}
+
+// ===== DIGITAL EXAM MODE =====
+function startDigitalExam(trainingId) {
+  currentTrainingId = trainingId;
+  currentExamParticipantIndex = 0;
+  nav('examMode', 'Digitale Prüfung');
+  renderExamParticipantSelect(trainingId);
+}
+
+function renderExamParticipantSelect(trainingId) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  document.getElementById('exam-mode-content').innerHTML = `
+    <div class="page-title mb8">Digitale Prüfung · ${training.name}</div>
+    <div class="page-sub mb24">Teilnehmer für die Prüfung auswählen</div>
+    <div class="card" style="max-width:600px">
+      <div class="card-title">Teilnehmer</div>
+      ${training.participants.map((p, idx) => `
+        <div class="participant-item mb8" style="cursor:${p.completedAt?'default':'pointer'}" ${p.completedAt?'':'onclick="startExamForParticipant(\''+trainingId+'\','+idx+')"'}>
+          <div class="p-name">${p.name}</div>
+          <div class="p-id">${p.employeeId||'—'}</div>
+          <div>${p.completedAt ? '<span class="badge badge-green">Abgeschlossen</span>' : '<button class="btn btn-primary btn-sm">Prüfung starten</button>'}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="btn-group mt16">
+      <button class="btn btn-secondary" onclick="openTrainingDetail('${trainingId}')">← Zurück zur Übersicht</button>
+    </div>
+  `;
+}
+
+function startExamForParticipant(trainingId, pIdx) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  const p = training.participants[pIdx];
+  currentExamParticipantIndex = pIdx;
+  currentExamAnswers = {};
+  currentExamPart = 'AT';
+  renderExamInterface(trainingId, pIdx, 'AT');
+}
+
+function renderExamInterface(trainingId, pIdx, part) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  const p = training.participants[pIdx];
+  const allQ = getAllQuestionsMap();
+  const qIds = p.questions[part] || [];
+  const parts = Object.keys(PART_NAMES);
+
+  document.getElementById('exam-mode-content').innerHTML = `
+    <div class="exam-progress-bar"><div class="exam-progress-fill" id="exam-prog" style="width:0%"></div></div>
+    <div class="exam-header no-print">
+      <div>
+        <div style="font-weight:700;font-size:15px">${p.name}</div>
+        <div class="text-sm text-muted">${training.method} · ${training.name}</div>
+      </div>
+      <div class="part-nav">
+        ${parts.map(pt => `<div class="part-nav-item ${pt===part?'active':''} ${(currentExamAnswers[pt]&&Object.keys(currentExamAnswers[pt]).length>=(p.questions[pt]||[]).length)?'completed':''}" onclick="">${PART_NAMES[pt].split(' ')[0]} Teil</div>`).join('')}
+      </div>
+    </div>
+    <div style="max-width:800px;margin:24px auto;padding:0 16px">
+      <div style="font-size:18px;font-weight:700;margin-bottom:4px">${PART_NAMES[part]}</div>
+      <div class="text-sm text-muted mb24">${qIds.length} Fragen · Bestehensschwelle 80%</div>
+      <div id="exam-questions">
+        ${qIds.map((qId, qi) => {
+          const q = allQ[qId];
+          if (!q) return '';
+          const partAns = currentExamAnswers[part] || {};
+          const ans = partAns[qId];
+          return `<div class="question-block" id="qb-${qId}">
+            <div class="q-header">
+              <span class="q-num">${part}-${qi+1}</span>
+              <div class="q-text">${q.text}</div>
+            </div>
+            <div class="q-options">
+              ${Object.entries(q.options).map(([k,v]) => `
+                <div class="q-option ${ans===k?'selected':''}" onclick="selectAnswer('${part}','${qId}','${k}','${trainingId}',${pIdx})">
+                  <span class="q-option-label">${k})</span>
+                  <span class="q-option-text">${v}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="flex justify-between mt24 mb24">
+        ${parts.indexOf(part) > 0 ? `<button class="btn btn-secondary" onclick="navExamPart('${trainingId}',${pIdx},'${parts[parts.indexOf(part)-1]}')">← Vorheriger Teil</button>` : '<div></div>'}
+        ${parts.indexOf(part) < parts.length - 1 ?
+          `<button class="btn btn-primary" onclick="navExamPart('${trainingId}',${pIdx},'${parts[parts.indexOf(part)+1]}')">Weiter: ${PART_NAMES[parts[parts.indexOf(part)+1]]} →</button>` :
+          `<button class="btn btn-success" onclick="submitDigitalExam('${trainingId}',${pIdx})">✓ Prüfung abgeben</button>`
+        }
+      </div>
+    </div>
+  `;
+  updateExamProgress(part, pIdx, training);
+}
+
+function selectAnswer(part, qId, answer, trainingId, pIdx) {
+  if (!currentExamAnswers[part]) currentExamAnswers[part] = {};
+  currentExamAnswers[part][qId] = answer;
+  document.querySelectorAll(`#qb-${qId} .q-option`).forEach(el => el.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  const training = getTrainings().find(t => t.id === trainingId);
+  updateExamProgress(part, pIdx, training);
+}
+
+function updateExamProgress(part, pIdx, training) {
+  const p = training.participants[pIdx];
+  const total = (p.questions[part]||[]).length;
+  const answered = Object.keys(currentExamAnswers[part]||{}).length;
+  const pct = total ? Math.round(answered/total*100) : 0;
+  const bar = document.getElementById('exam-prog');
+  if (bar) bar.style.width = pct + '%';
+}
+
+function navExamPart(trainingId, pIdx, newPart) {
+  currentExamPart = newPart;
+  renderExamInterface(trainingId, pIdx, newPart);
+}
+
+function submitDigitalExam(trainingId, pIdx) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  const p = training.participants[pIdx];
+  const allAnswered = Object.keys(PART_NAMES).every(part => {
+    const needed = (p.questions[part]||[]).length;
+    const answered = Object.keys(currentExamAnswers[part]||{}).length;
+    return answered === needed;
+  });
+  if (!allAnswered) {
+    if (!confirm('Nicht alle Fragen beantwortet. Trotzdem abgeben?')) return;
+  }
+  // Auto-save results
+  pendingResultsData = { trainingId, pIdx };
+  const allQ = getAllQuestionsMap();
+  const trainings = getTrainings();
+  const t2 = trainings.find(x => x.id === trainingId);
+  const p2 = t2.participants[pIdx];
+
+  const answers = {};
+  const scores = {};
+  for (const [partKey] of Object.entries(PART_NAMES)) {
+    answers[partKey] = currentExamAnswers[partKey] || {};
+    const qIds = p2.questions[partKey] || [];
+    let correct = 0, total = qIds.length;
+    qIds.forEach(qId => {
+      const a = answers[partKey][qId];
+      const q = allQ[qId];
+      if (a && q && a === q.answer) correct++;
+    });
+    scores[partKey] = { correct, total, percent: total ? Math.round(correct/total*100) : 0, passed: total > 0 && correct/total >= PASS_THRESHOLD };
+  }
+
+  p2.answers = answers;
+  p2.scores = scores;
+  p2.overallPassed = Object.values(scores).every(s => s.passed);
+  p2.completedAt = now_iso();
+  if (t2.participants.every(x => x.completedAt)) t2.status = 'completed';
+  saveTrainings(trainings);
+
+  const history = getHistory();
+  const hkey = `${p2.participantId}:::${t2.method}`;
+  if (!history[hkey]) history[hkey] = [];
+  const allQIds = [...(p2.questions.AT||[]), ...(p2.questions.ST||[]), ...(p2.questions.PR||[])];
+  history[hkey].push({ trainingId, date: t2.date, questionIds: allQIds, scores, passed: p2.overallPassed });
+  saveHistory(history);
+
+  // Show result
+  showExamResult(trainingId, pIdx, scores, p2.overallPassed);
+}
+
+function showExamResult(trainingId, pIdx, scores, overallPassed) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  const p = training.participants[pIdx];
+  document.getElementById('exam-mode-content').innerHTML = `
+    <div style="max-width:600px;margin:60px auto;text-align:center">
+      <div style="font-size:64px;margin-bottom:16px">${overallPassed ? '🎉' : '😔'}</div>
+      <div class="page-title" style="color:${overallPassed?'var(--green)':'var(--red)'}">${overallPassed ? 'Bestanden!' : 'Nicht bestanden'}</div>
+      <div class="page-sub">${p.name} · ${training.method}</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0">
+        ${Object.entries(PART_NAMES).map(([k,l]) => {
+          const s = scores[k]; const pct = s.percent;
+          return `<div class="card" style="text-align:center">
+            <div class="text-xs text-dim mb4">${l}</div>
+            <div style="font-size:28px;font-weight:700;font-family:var(--mono);color:${s.passed?'var(--green)':'var(--red)'}">${pct}%</div>
+            <div class="text-xs text-muted">${s.correct}/${s.total} richtig</div>
+            <span class="badge mt8 ${s.passed?'badge-green':'badge-red'}">${s.passed?'Bestanden':'Nicht bestanden'}</span>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="btn-group" style="justify-content:center">
+        <button class="btn btn-primary" onclick="renderExamParticipantSelect('${trainingId}')">Nächster Teilnehmer</button>
+        <button class="btn btn-secondary" onclick="openTrainingDetail('${trainingId}')">Zur Übersicht</button>
+      </div>
+    </div>
+  `;
+}
+
+// ===== TRAININGS LIST =====
+function renderTrainings() {
+  const trainings = getTrainings().sort((a,b) => new Date(b.date)-new Date(a.date));
+  const methodFilter = currentMethod;
+
+  const filtered = methodFilter ? trainings.filter(t => t.method === methodFilter) : trainings;
+
+  document.getElementById('trainings-list').innerHTML = filtered.length ? `
+    <div class="btn-group mb16 no-print">
+      <select class="form-input" style="width:200px" onchange="filterTrainings(this.value)" id="training-method-filter">
+        <option value="">Alle Methoden</option>
+        ${Object.entries(METHOD_NAMES).map(([k,v]) => `<option value="${k}" ${methodFilter===k?'selected':''}>${k} · ${v}</option>`).join('')}
+      </select>
+    </div>
+    ${filtered.map(t => {
+      const done = t.participants?.filter(p => p.completedAt).length || 0;
+      const total = t.participants?.length || 0;
+      const pass = t.participants?.filter(p => p.overallPassed).length || 0;
+      return `<div class="card" style="cursor:pointer" onclick="openTrainingDetail('${t.id}')">
+        <div class="flex justify-between items-center">
+          <div>
+            <div style="font-weight:600;font-size:15px;margin-bottom:4px">${t.name}</div>
+            <div class="text-sm text-muted">
+              <span class="badge badge-blue">${t.method}</span>
+              &nbsp;${fmtDate(t.date)}
+              ${t.location ? ' · ' + t.location : ''}
+              ${t.trainer ? ' · Prüfer: ' + t.trainer : ''}
+            </div>
+          </div>
+          <div class="flex gap8 items-center">
+            <div class="text-sm text-mono text-muted">${done}/${total} abgenommen</div>
+            ${t.status === 'completed' ? `<span class="badge badge-green">Abgeschlossen · ${pass}/${total} bestanden</span>` : `<span class="badge badge-amber">Offen</span>`}
+            <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();openTrainingDetail('${t.id}')">Details →</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  ` : `<div class="empty-state"><div class="empty-icon">📋</div><p>Noch keine Schulungen angelegt</p><button class="btn btn-primary" onclick="nav('newTraining')">Erste Schulung anlegen</button></div>`;
+}
+
+function filterTrainings(method) {
+  currentMethod = method;
+  renderTrainings();
+}
+
+// ===== HISTORY =====
+function renderHistory() {
+  const nameSearch = document.getElementById('history-search-name')?.value?.toLowerCase() || '';
+  const methodFilter = document.getElementById('history-method')?.value || '';
+  const history = getHistory();
+  const participants = getParticipants();
+  const now = new Date();
+  const fourYearsAgo = new Date(); fourYearsAgo.setFullYear(fourYearsAgo.getFullYear() - RECERT_YEARS);
+
+  let rows = [];
+  Object.entries(history).forEach(([key, hlist]) => {
+    const [pid, method] = key.split(':::');
+    if (methodFilter && method !== methodFilter) return;
+    const p = participants.find(x => x.id === pid);
+    const name = p?.name || pid;
+    if (nameSearch && !name.toLowerCase().includes(nameSearch)) return;
+    hlist.filter(h => new Date(h.date) >= fourYearsAgo).forEach(h => {
+      rows.push({ name, employeeId: p?.employeeId, method, ...h });
+    });
+  });
+
+  rows.sort((a,b) => new Date(b.date)-new Date(a.date));
+
+  document.getElementById('history-content').innerHTML = rows.length ? `
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Datum</th><th>Teilnehmer</th><th>Personal-Nr.</th><th>Methode</th>
+            <th>AT</th><th>ST</th><th>PR</th><th>Gesamt</th><th>Fragen gesamt</th>
+          </tr></thead>
+          <tbody>${rows.map(r => `<tr>
+            <td class="td-mono">${fmtDate(r.date)}</td>
+            <td>${r.name}</td>
+            <td class="td-mono">${r.employeeId||'—'}</td>
+            <td><span class="badge badge-blue">${r.method}</span></td>
+            <td>${scoreCell(r.scores?.AT)}</td>
+            <td>${scoreCell(r.scores?.ST)}</td>
+            <td>${scoreCell(r.scores?.PR)}</td>
+            <td>${r.passed ? '<span class="badge badge-green">✓ Bestanden</span>' : '<span class="badge badge-red">✗ Nicht bestanden</span>'}</td>
+            <td class="td-mono">${r.questionIds?.length || '—'}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>
+  ` : '<div class="empty-state"><div class="empty-icon">📊</div><p>Keine Verlaufsdaten vorhanden</p></div>';
+}
+
+// ===== SETTINGS =====
+function renderSettings() {
+  if (!questions) return;
+  let info = '';
+  const atCount = questions.shared?.AT?.length || 0;
+  info += `<div class="mb8">Allg. Teil (AT, gemeinsam): <strong>${atCount}</strong> Fragen</div>`;
+  if (questions.methods) {
+    Object.entries(questions.methods).forEach(([m, mq]) => {
+      const st = mq.ST?.length || 0;
+      const pr = mq.PR?.length || 0;
+      info += `<div class="mb4"><span class="badge badge-blue mb4">${m}</span> ST: <strong>${st}</strong> · PR: <strong>${pr}</strong></div>`;
+    });
+  }
+  document.getElementById('question-db-info').innerHTML = info;
+}
+
+// ===== PRINT EXAM =====
+function printExam(trainingId) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  const allQ = getAllQuestionsMap();
+
+  let printContent = training.participants.map((p, idx) => {
+    let html = `<div class="${idx>0?'page-break':''}">
+      <h2 style="margin-bottom:8px">ZfP Prüfungsbogen – ${training.method} · ${METHOD_NAMES[training.method]}</h2>
+      <p style="margin-bottom:4px"><strong>Teilnehmer:</strong> ${p.name} (${p.employeeId||'—'}) | <strong>Datum:</strong> ${fmtDate(training.date)} | <strong>Ort:</strong> ${training.location||'—'}</p>
+      <p style="margin-bottom:16px"><em>Bestehensgrenze: 80% je Teil · Bitte nur EINE Antwort je Frage ankreuzen</em></p>
+    `;
+    for (const [partKey, partLabel] of Object.entries(PART_NAMES)) {
+      const qIds = p.questions[partKey] || [];
+      html += `<h3 style="margin:16px 0 8px">${partLabel} (${qIds.length} Fragen)</h3>`;
+      qIds.forEach((qId, qi) => {
+        const q = allQ[qId];
+        if (!q) return;
+        html += `<div style="margin-bottom:12px;padding:10px;border:1pt solid #ddd;border-radius:4px">
+          <p style="font-weight:600;margin-bottom:6px">${qi+1}. ${q.text}</p>
+          ${Object.entries(q.options).map(([k,v]) => `<p style="margin:2px 0;padding-left:16px">☐ ${k}) ${v}</p>`).join('')}
+        </div>`;
+      });
+    }
+    html += '</div>';
+    return html;
+  }).join('');
+
+  const win = window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Prüfungsbogen · ${training.name}</title>
+    <style>body{font-family:Arial,sans-serif;font-size:11pt;margin:20mm}.page-break{break-before:page}h2{font-size:14pt}h3{font-size:12pt}</style>
+  </head><body>${printContent}</body></html>`);
+  win.document.close();
+  win.print();
+}
+
+// ===== EXPORT/IMPORT =====
+function exportData() {
+  const data = {
+    version: '2.0',
+    exportedAt: now_iso(),
+    participants: getParticipants(),
+    trainings: getTrainings(),
+    history: getHistory()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `zfp_system_backup_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  showToast('Daten exportiert', 'success');
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.participants) saveParticipants(data.participants);
+      if (data.trainings) saveTrainings(data.trainings);
+      if (data.history) saveHistory(data.history);
+      showToast('Daten importiert!', 'success');
+      renderDashboard();
+    } catch { showToast('Import-Fehler: Ungültiges Format', 'error'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+function exportTrainingResults(trainingId) {
+  const training = getTrainings().find(t => t.id === trainingId);
+  const rows = [['Name','Personal-Nr.','Abteilung','AT %','AT Bestanden','ST %','ST Bestanden','PR %','PR Bestanden','Gesamt']];
+  training.participants.forEach(p => {
+    const s = p.scores;
+    rows.push([
+      p.name, p.employeeId||'', p.department||'',
+      s?.AT?.percent||'', s?.AT?.passed?'JA':'NEIN',
+      s?.ST?.percent||'', s?.ST?.passed?'JA':'NEIN',
+      s?.PR?.percent||'', s?.PR?.passed?'JA':'NEIN',
+      p.overallPassed?'BESTANDEN':'NICHT BESTANDEN'
+    ]);
+  });
+  const csv = rows.map(r => r.join(';')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `ergebnisse_${training.method}_${training.date}.csv`;
+  a.click();
+  showToast('Ergebnisse als CSV exportiert', 'success');
+}
+
+function clearAllData() {
+  if (!confirm('ACHTUNG: Alle Teilnehmer, Schulungen und Historien werden gelöscht. Bitte vorher sichern!')) return;
+  ['zfp_participants','zfp_trainings','zfp_history'].forEach(k => localStorage.removeItem(k));
+  showToast('Alle Daten gelöscht', 'success');
+  renderDashboard();
+}
+
+function reloadQuestions() { loadQuestions(); showToast('Fragen werden neu geladen...', 'success'); }
+
+// ===== HELPERS =====
+function getAllQuestionsMap() {
+  const map = {};
+  if (!questions) return map;
+  (questions.shared?.AT||[]).forEach(q => map[q.id] = q);
+  if (questions.methods) {
+    Object.values(questions.methods).forEach(m => {
+      (m.ST||[]).forEach(q => map[q.id] = q);
+      (m.PR||[]).forEach(q => map[q.id] = q);
+    });
+  }
+  return map;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function now_iso() { return new Date().toISOString(); }
+function fmtDate(d) {
+  if (!d) return '—';
+  const [y,m,day] = (d.split('T')[0] || d).split('-');
+  return `${day}.${m}.${y}`;
+}
+
+function openModal(id) { document.getElementById(id)?.classList.add('open'); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+
+function showToast(msg, type = 'success', duration = 3500) {
+  const container = document.getElementById('toast');
+  const el = document.createElement('div');
+  el.className = `toast-item ${type}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => el.remove(), duration);
+}
+
+function importParticipantsCSV() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.csv';
+  input.onchange = e => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const lines = ev.target.result.split('\n').filter(l => l.trim());
+      const ps = getParticipants();
+      let added = 0;
+      lines.slice(1).forEach(line => {
+        const parts = line.split(';').map(s => s.trim().replace(/"/g,''));
+        const [name, empId, dept] = parts;
+        if (!name || !empId || ps.find(p => p.employeeId === empId)) return;
+        ps.push({ id: uid(), name, employeeId: empId, department: dept||'', createdAt: now_iso() });
+        added++;
+      });
+      saveParticipants(ps);
+      renderParticipants();
+      showToast(`${added} Teilnehmer importiert`, 'success');
+    };
+    reader.readAsText(file, 'utf-8');
+  };
+  input.click();
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  loadQuestions();
+  renderDashboard();
 });
-window.addEventListener('afterprint', () => {
-  document.getElementById('print-header').style.display = 'none';
-});
-
-// ── INIT ─────────────────────────────────────────
-buildFreq('frq-c1','1'); buildFreq('frq-c2','2');
-buildAmp('amp-c1','1'); buildAmp('amp-c2','2');
-buildFlt('flt-c1','1'); buildFlt('flt-c2','2');
-buildPlaus();
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('f-date').value=today;
-document.getElementById('f-issue').value=today;
-document.getElementById('f-sign-date').value=today;
 </script>
 </body>
 </html>
